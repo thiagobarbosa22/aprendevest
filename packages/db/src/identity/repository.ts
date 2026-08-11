@@ -11,6 +11,7 @@ import {
   essaySubmissions,
   examRuns,
   mastery,
+  oauthAccounts,
   privacyRequests,
   profiles,
   reviewItems,
@@ -25,7 +26,7 @@ export type ActiveUser = {
   id: string;
   email: string;
   displayName: string;
-  passwordHash: string;
+  passwordHash: string | null;
   role: (typeof users.$inferSelect)["role"];
   status: (typeof users.$inferSelect)["status"];
 };
@@ -64,6 +65,108 @@ export async function createStudent(input: {
     });
 
     return user;
+  });
+}
+
+export async function findOrCreateOAuthUser(input: {
+  provider: "google";
+  providerAccountId: string;
+  email: string;
+  displayName: string;
+  emailVerified: boolean;
+  policyVersion: string;
+}): Promise<{
+  user: { id: string; role: (typeof users.$inferSelect)["role"] };
+  isNew: boolean;
+}> {
+  const db = getDatabase();
+  return db.transaction(async (tx) => {
+    const [linked] = await tx
+      .select({ userId: oauthAccounts.userId })
+      .from(oauthAccounts)
+      .where(
+        and(
+          eq(oauthAccounts.provider, input.provider),
+          eq(oauthAccounts.providerAccountId, input.providerAccountId),
+        ),
+      )
+      .limit(1);
+    if (linked) {
+      const [user] = await tx
+        .select({ id: users.id, role: users.role })
+        .from(users)
+        .where(
+          and(
+            eq(users.id, linked.userId),
+            eq(users.status, "active"),
+            isNull(users.deletedAt),
+          ),
+        )
+        .limit(1);
+      if (user) return { user, isNew: false };
+    }
+
+    // No link yet: only auto-attach to an existing account when Google has
+    // verified the email, otherwise an attacker could claim someone else's
+    // account by registering an unverified address that matches it.
+    if (input.emailVerified) {
+      const [existing] = await tx
+        .select({ id: users.id, role: users.role })
+        .from(users)
+        .where(
+          and(
+            sql`lower(${users.email}) = ${input.email.toLowerCase()}`,
+            eq(users.status, "active"),
+            isNull(users.deletedAt),
+          ),
+        )
+        .limit(1);
+      if (existing) {
+        await tx
+          .insert(oauthAccounts)
+          .values({
+            userId: existing.id,
+            provider: input.provider,
+            providerAccountId: input.providerAccountId,
+            email: input.email,
+          })
+          .onConflictDoNothing();
+        return { user: existing, isNew: false };
+      }
+    }
+
+    const [user] = await tx
+      .insert(users)
+      .values({
+        email: input.email,
+        displayName: input.displayName,
+        passwordHash: null,
+        emailVerifiedAt: input.emailVerified ? new Date() : null,
+      })
+      .returning({ id: users.id, role: users.role });
+    if (!user) throw new Error("Falha ao criar usuário via Google.");
+
+    await tx.insert(profiles).values({ userId: user.id });
+    await tx.insert(consents).values({
+      userId: user.id,
+      purpose: "privacy_policy",
+      policyVersion: input.policyVersion,
+      granted: true,
+    });
+    await tx.insert(oauthAccounts).values({
+      userId: user.id,
+      provider: input.provider,
+      providerAccountId: input.providerAccountId,
+      email: input.email,
+    });
+    await tx.insert(auditEvents).values({
+      actorUserId: user.id,
+      action: "identity.user_created_oauth",
+      targetType: "user",
+      targetId: user.id,
+    });
+
+    return { user, isNew: true };
   });
 }
 

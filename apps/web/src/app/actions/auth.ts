@@ -99,9 +99,10 @@ export async function login(
 
   try {
     const user = await findActiveUserByEmail(parsed.data.email);
-    const passwordMatches = user
-      ? await verifyPassword(parsed.data.password, user.passwordHash)
-      : await hashPassword(parsed.data.password).then(() => false);
+    const passwordMatches =
+      user && user.passwordHash
+        ? await verifyPassword(parsed.data.password, user.passwordHash)
+        : await hashPassword(parsed.data.password).then(() => false);
 
     if (!user || !passwordMatches) {
       return { message: "E-mail ou senha incorretos." };

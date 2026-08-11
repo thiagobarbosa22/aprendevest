@@ -69,6 +69,7 @@ export {
   deleteAllUserSessions,
   deleteDatabaseSession,
   findActiveUserByEmail,
+  findOrCreateOAuthUser,
   findSession,
   getUserPrivacyExport,
   requestUserDeletion,

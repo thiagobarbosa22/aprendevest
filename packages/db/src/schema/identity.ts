@@ -43,6 +43,8 @@ export const privacyRequestStatus = pgEnum("privacy_request_status", [
   "cancelled",
 ]);
 
+export const oauthProvider = pgEnum("oauth_provider", ["google"]);
+
 const timestamps = {
   createdAt: timestamp("created_at", { withTimezone: true })
     .defaultNow()
@@ -58,7 +60,8 @@ export const users = pgTable(
     id: uuid("id").defaultRandom().primaryKey(),
     email: varchar("email", { length: 320 }).notNull(),
     displayName: varchar("display_name", { length: 100 }).notNull(),
-    passwordHash: text("password_hash").notNull(),
+    /** Null for accounts created via an OAuth provider only (e.g. Google). */
+    passwordHash: text("password_hash"),
     role: userRole("role").default("student").notNull(),
     status: userStatus("status").default("active").notNull(),
     emailVerifiedAt: timestamp("email_verified_at", { withTimezone: true }),
@@ -113,6 +116,31 @@ export const consents = pgTable(
   },
   (table) => [
     index("consents_user_purpose_idx").on(table.userId, table.purpose),
+  ],
+);
+
+export const oauthAccounts = pgTable(
+  "oauth_accounts",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    provider: oauthProvider("provider").notNull(),
+    providerAccountId: varchar("provider_account_id", {
+      length: 255,
+    }).notNull(),
+    email: varchar("email", { length: 320 }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => [
+    uniqueIndex("oauth_accounts_provider_account_unique").on(
+      table.provider,
+      table.providerAccountId,
+    ),
+    index("oauth_accounts_user_idx").on(table.userId),
   ],
 );
 
