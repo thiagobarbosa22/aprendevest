@@ -40,10 +40,15 @@
 - Aplicação autenticada tem autosave, retomada, cronômetro e finalização imutável.
 - **Saída demonstrada:** prova sintética/autorizada pode ser filtrada, aberta e resolvida online.
 
-## Fases 6–7 — Plano e simulados
+## Fase 6 — Plano adaptativo (concluída em 2026-08-11)
 
-- Questões/tentativas/caderno de erros; provas autorizadas; diagnóstico/plano/revisão; simulados/autosave/análise.
-- Cada fase fecha um caminho E2E e só então amplia cobertura.
+- Diagnóstico editável, domínio por tópico, agenda semanal explicável e replanejamento sem punição.
+- Revisão espaçada com fila persistida, evidências e intervalos ajustados pela lembrança.
+- **Saída demonstrada:** diagnóstico gera plano misto de teoria/prática/revisão; tarefas e revisões persistem e o painel explica os dados usados.
+
+## Fase 7 — Simulados
+
+- Configuração, cronômetro, autosave, correção e análise por tópico.
 
 ## Fase 8 — Qualidade operacional
 
@@ -52,9 +57,3 @@
 ## Fase 9 — Expansões protegidas por feature flag
 
 - Redação, tutor com IA, professores, pagamentos e novos exames, sem dependência para o núcleo.
-
-## Escopo imediato compartilhado
-
-- Codex finaliza o diagnóstico, contratos e gate técnico.
-- Claude cria arquitetura de informação da primeira jornada, design tokens, shell e componentes base acessíveis sem consumir APIs ainda não documentadas.
-- Integração ocorre após revisão de arquivos alterados e execução do gate completo.

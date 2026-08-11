@@ -62,12 +62,33 @@ export default async function StudentHomePage() {
               Funções: primeiros passos.
             </p>
           </Link>
-          <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-            <strong>Prática</strong>
+          <Link
+            href="/app/plano"
+            className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
+          >
+            <strong>Meu plano</strong>
             <p className="mt-2 text-sm text-[var(--color-text-muted)]">
-              Chega na Fase 4.
+              Diagnóstico, agenda e prioridades explicadas.
             </p>
-          </div>
+          </Link>
+          <Link
+            href="/app/revisao"
+            className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
+          >
+            <strong>Revisão</strong>
+            <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+              Retome lacunas no momento certo.
+            </p>
+          </Link>
+          <Link
+            href="/app/desempenho"
+            className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
+          >
+            <strong>Desempenho</strong>
+            <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+              Domínio por tópico e evidências usadas.
+            </p>
+          </Link>
         </section>
       )}
     </main>

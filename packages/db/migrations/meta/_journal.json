@@ -36,6 +36,13 @@
       "when": 1786437530192,
       "tag": "0004_spotty_vulcan",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1786446161014,
+      "tag": "0005_dry_blob",
+      "breakpoints": true
     }
   ]
 }

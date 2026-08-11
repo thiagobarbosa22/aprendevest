@@ -38,6 +38,15 @@ export {
   updateExamRun,
 } from "./exam-paper/repository";
 export {
+  completeStudyTask,
+  createStudyPlan,
+  getActiveStudyPlan,
+  getPerformance,
+  gradeReview,
+  listDiagnosticTopics,
+  listDueReviews,
+} from "./study-plan/repository";
+export {
   completeProfile,
   createDatabaseSession,
   createStudent,

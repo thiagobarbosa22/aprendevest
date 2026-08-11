@@ -23,3 +23,11 @@ export {
 } from "./progress/content-progress";
 export { evaluateObjectiveAnswer } from "./assessments/evaluate-answer";
 export { mergeExamRun } from "./assessments/exam-run";
+export {
+  buildWeeklyPlan,
+  estimateMastery,
+  nextReviewDate,
+  type DiagnosticAnswer,
+  type PlannedTask,
+  type PlanTopic,
+} from "./study-plan/planner";
