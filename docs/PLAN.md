@@ -52,9 +52,11 @@
 - Cronômetro acessível, autosave local/servidor, retomada, correção e análise sem promessa de aprovação.
 - **Saída demonstrada:** estudante configura, resolve, finaliza e consulta o histórico de um simulado ponta a ponta.
 
-## Fase 8 — Qualidade operacional
+## Fase 8 — Qualidade operacional (concluída em 2026-08-11)
 
-- Segurança, acessibilidade, performance, observabilidade, backups e plano de incidente.
+- Headers de segurança, rate limiting, correlação por request ID, sitemap/robots e estados loading/erro/offline.
+- Playwright desktop/mobile no CI, runbooks de implantação, backup/restore e resposta a incidente.
+- **Saída demonstrada:** gate técnico e jornadas públicas E2E verdes; operação e recuperação possuem procedimentos reproduzíveis.
 
 ## Fase 9 — Expansões protegidas por feature flag
 

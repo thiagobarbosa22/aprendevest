@@ -5,6 +5,7 @@ import { SkipLink } from "@aprendevest/ui";
 import logoPrincipal from "../../../../fotos/logoprincipal.jpg";
 
 import "./globals.css";
+import { OfflineStatus } from "./_components/offline-status";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_URL ?? "http://localhost:3000"),
@@ -38,6 +39,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>
         <SkipLink targetId="conteudo-principal" />
+        <OfflineStatus />
         {children}
       </body>
     </html>

@@ -13,6 +13,7 @@
     "db:migrate": "corepack pnpm --filter @aprendevest/db db:migrate",
     "db:seed": "corepack pnpm --filter @aprendevest/db db:seed",
     "dev": "corepack pnpm --filter @aprendevest/web dev",
+    "e2e": "corepack pnpm --filter @aprendevest/web test:e2e",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "corepack pnpm -r --if-present lint",

@@ -30,4 +30,4 @@ corepack pnpm build
 corepack pnpm check
 ```
 
-Consulte [docs/SETUP.md](docs/SETUP.md) para configuração detalhada e [docs/TESTING.md](docs/TESTING.md) para os critérios dos testes.
+Consulte [docs/SETUP.md](docs/SETUP.md) para configuração, [docs/TESTING.md](docs/TESTING.md) para testes, [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) para implantação e [docs/OPERATIONS.md](docs/OPERATIONS.md) para backup/incidentes.

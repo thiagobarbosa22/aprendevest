@@ -38,3 +38,26 @@ jobs:
 
       - name: Executar gate da Fase 0
         run: pnpm check
+
+  e2e:
+    name: Jornadas E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+      - name: Configurar pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+      - name: Instalar Chromium
+        run: pnpm --filter @aprendevest/web exec playwright install --with-deps chromium
+      - name: Executar smoke desktop e mobile
+        run: pnpm e2e

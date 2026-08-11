@@ -19,6 +19,7 @@ import {
   deleteSession,
   getCurrentUser,
 } from "../../lib/auth/session";
+import { checkRateLimit } from "../../lib/security/rate-limit";
 
 export type AuthFormState = {
   message?: string;
@@ -45,6 +46,12 @@ export async function signup(
   });
 
   if (!parsed.success) return { errors: fields(parsed.error) };
+  const rate = checkRateLimit(`signup:${parsed.data.email.toLowerCase()}`, {
+    limit: 5,
+    windowMs: 15 * 60_000,
+  });
+  if (!rate.allowed)
+    return { message: "Muitas tentativas. Aguarde antes de tentar novamente." };
 
   let userId: string;
   try {
@@ -83,6 +90,12 @@ export async function login(
     password: formData.get("password"),
   });
   if (!parsed.success) return { errors: fields(parsed.error) };
+  const rate = checkRateLimit(`login:${parsed.data.email.toLowerCase()}`, {
+    limit: 8,
+    windowMs: 15 * 60_000,
+  });
+  if (!rate.allowed)
+    return { message: "Muitas tentativas. Aguarde antes de tentar novamente." };
 
   try {
     const user = await findActiveUserByEmail(parsed.data.email);

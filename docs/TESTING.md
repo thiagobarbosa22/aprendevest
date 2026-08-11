@@ -1,5 +1,7 @@
 # Estratégia e execução de testes
 
+O gate completo usa `corepack pnpm check`. O smoke E2E desktop/mobile usa `corepack pnpm e2e`, inicia o Next.js isoladamente na porta 3199 e cobre descoberta pública, teclado/foco e proteção da área autenticada.
+
 ## Gate da Fase 0
 
 Execute:

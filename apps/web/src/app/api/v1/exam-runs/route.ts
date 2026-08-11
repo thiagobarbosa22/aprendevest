@@ -1,6 +1,16 @@
 import { startExamRun, getPaperQuestions } from "@aprendevest/db";
 import { getCurrentUser } from "../../../../lib/auth/session";
+import { rateLimitRequest } from "../../../../lib/security/rate-limit";
 export async function POST(request: Request) {
+  const rate = rateLimitRequest(request, "exam-start", 20);
+  if (!rate.allowed)
+    return Response.json(
+      { error: "Limite temporário atingido." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(rate.retryAfterSeconds) },
+      },
+    );
   const user = await getCurrentUser();
   if (!user)
     return Response.json({ error: "Não autenticado." }, { status: 401 });

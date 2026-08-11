@@ -16,8 +16,14 @@
 - A solicitação de exclusão bloqueia a conta e revoga todas as sessões imediatamente; a anonimização definitiva deve respeitar a política de retenção operacional.
 - Auditoria registra ação e alvo, sem senha, token ou conteúdo sensível.
 
-## Limites conhecidos da Fase 1
+## Controles da Fase 8
+
+- CSP, bloqueio de framing, `nosniff`, política de referência e permissões mínimas são enviados em todas as rotas.
+- Cadastro/login e APIs mutáveis têm rate limiting local; ambientes multi-instância devem usar o mesmo contrato com armazenamento Redis.
+- Respostas recebem ID opaco de correlação e os runbooks proíbem conteúdo sensível em logs.
+
+## Limites conhecidos
 
 - Recuperação e verificação de e-mail dependem da integração transacional futura.
-- Rate limiting distribuído será ativado na Fase 8; até lá, a implantação pública deve aplicar limite no proxy de borda.
+- Rate limiting distribuído requer Redis ou controle equivalente no proxy quando houver mais de uma instância.
 - Administradores ainda não possuem segundo fator; o CMS não deve ser liberado publicamente antes dessa proteção.
