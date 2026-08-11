@@ -8,6 +8,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { getCurrentUser } from "../../../lib/auth/session";
+import { toYoutubeEmbedUrl } from "../../../lib/youtube";
 import { LessonProgress } from "../../_components/lesson-progress";
 
 export const dynamic = "force-dynamic";
@@ -41,6 +42,19 @@ export default async function LessonPage({
           <p className="mt-4 text-lg text-[var(--color-text-muted)]">
             {lesson.summary}
           </p>
+          {lesson.mediaUrl && toYoutubeEmbedUrl(lesson.mediaUrl) ? (
+            <div className="mt-8 aspect-video overflow-hidden rounded-xl bg-black">
+              <iframe
+                className="h-full w-full"
+                src={toYoutubeEmbedUrl(lesson.mediaUrl) ?? undefined}
+                title={lesson.title}
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          ) : null}
           <section className="mt-8 rounded-xl bg-[var(--color-surface-muted)] p-6">
             <h2 className="font-semibold">Ao final, você será capaz de</h2>
             <ul className="mt-3 list-disc space-y-1 pl-5">

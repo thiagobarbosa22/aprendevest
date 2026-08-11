@@ -67,4 +67,19 @@ export const demoSubjects = [
     summary:
       "Processos históricos do Brasil e do mundo em perspectiva crítica.",
   },
+  {
+    id: "demo-quimica",
+    slug: "quimica",
+    name: "Química",
+    area: "natural_sciences" as const,
+    summary:
+      "Química orgânica, inorgânica, estequiometria, termoquímica e eletroquímica.",
+  },
+  {
+    id: "demo-fisica",
+    slug: "fisica",
+    name: "Física",
+    area: "natural_sciences" as const,
+    summary: "Mecânica, termologia, eletricidade, óptica e ondulatória.",
+  },
 ];

@@ -19,6 +19,7 @@ import {
   topics,
   users,
 } from "./schema";
+import { lessonVideosBySubject, type SubjectSlug } from "./content/lesson-videos";
 
 config({ path: ["../../.env.local", "../../.env"], quiet: true });
 
@@ -190,6 +191,18 @@ async function seed() {
       "human_sciences",
       "Processos históricos do Brasil e do mundo em perspectiva crítica.",
     ],
+    [
+      "quimica",
+      "Química",
+      "natural_sciences",
+      "Química orgânica, inorgânica, estequiometria, termoquímica e eletroquímica.",
+    ],
+    [
+      "fisica",
+      "Física",
+      "natural_sciences",
+      "Mecânica, termologia, eletricidade, óptica e ondulatória.",
+    ],
   ] as const;
 
   for (const [slug, name, area, summary] of subjectData) {
@@ -211,16 +224,75 @@ async function seed() {
       })
       .onConflictDoNothing()
       .returning({ id: subjects.id });
-    if (subject) {
-      await getDatabase()
+    if (!subject) continue;
+    await getDatabase()
+      .insert(topics)
+      .values({
+        subjectId: subject.id,
+        slug: "fundamentos",
+        name: `Fundamentos de ${name}`,
+        summary: `Base conceitual para iniciar os estudos de ${name}.`,
+        status: "published",
+      });
+
+    const subtopics = lessonVideosBySubject[slug as SubjectSlug] ?? [];
+    if (!subtopics.length) continue;
+    const [videoModule] = await getDatabase()
+      .insert(curriculumModules)
+      .values({
+        subjectId: subject.id,
+        slug: "videoaulas",
+        title: `Vídeo-aulas de ${name}`,
+        summary: `Videoaulas selecionadas para reforçar os principais temas de ${name} cobrados no ENEM e vestibulares.`,
+        objectives: [`Revisar os temas centrais de ${name} por vídeo`],
+        status: "published",
+      })
+      .onConflictDoNothing()
+      .returning({ id: curriculumModules.id });
+    if (!videoModule) continue;
+
+    for (const subtopic of subtopics) {
+      const [topic] = await getDatabase()
         .insert(topics)
         .values({
           subjectId: subject.id,
-          slug: "fundamentos",
-          name: `Fundamentos de ${name}`,
-          summary: `Base conceitual para iniciar os estudos de ${name}.`,
+          slug: subtopic.slug,
+          name: subtopic.name,
+          summary: `Tópico de ${name} recorrente no ENEM e em vestibulares: ${subtopic.name}.`,
           status: "published",
-        });
+        })
+        .onConflictDoNothing()
+        .returning({ id: topics.id });
+      if (!topic) continue;
+      await getDatabase()
+        .insert(contentItems)
+        .values({
+          moduleId: videoModule.id,
+          topicId: topic.id,
+          slug: `${slug}-${subtopic.slug}`,
+          type: "video",
+          title: subtopic.name,
+          summary: `Videoaula "${subtopic.videoTitle}", pelo canal ${subtopic.channel}.`,
+          body: [
+            { type: "heading", text: subtopic.name },
+            {
+              type: "paragraph",
+              text: `Assista à videoaula acima para revisar ${subtopic.name.toLowerCase()}. Conteúdo pelo canal ${subtopic.channel}.`,
+            },
+          ],
+          objectives: [`Revisar os principais conceitos de ${subtopic.name}`],
+          estimatedMinutes: subtopic.estimatedMinutes,
+          mediaUrl: subtopic.videoUrl,
+          accessibleText: `Videoaula "${subtopic.videoTitle}", do canal ${subtopic.channel}, sobre ${subtopic.name}.`,
+          sourceUrl: subtopic.videoUrl,
+          rightsStatus: "official_link",
+          status: "published",
+          authorId: editorId,
+          reviewerId,
+          verifiedAt: now,
+          publishedAt: now,
+        })
+        .onConflictDoNothing();
     }
   }
 

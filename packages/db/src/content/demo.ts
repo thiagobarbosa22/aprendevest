@@ -1,5 +1,46 @@
 import type { ContentBlock } from "@aprendevest/contracts";
 
+import {
+  lessonVideosBySubject,
+  type SubjectSlug,
+} from "./lesson-videos";
+
+const subjectNames: Record<SubjectSlug, string> = {
+  matematica: "Matemática",
+  "lingua-portuguesa": "Língua Portuguesa",
+  biologia: "Biologia",
+  historia: "História",
+  quimica: "Química",
+  fisica: "Física",
+};
+
+const demoVideoLessons = Object.entries(lessonVideosBySubject).flatMap(
+  ([subjectSlug, subtopics]) =>
+    subtopics.map((subtopic) => ({
+      id: `demo-${subjectSlug}-${subtopic.slug}`,
+      slug: `${subjectSlug}-${subtopic.slug}`,
+      title: subtopic.name,
+      summary: `Videoaula "${subtopic.videoTitle}", pelo canal ${subtopic.channel}.`,
+      subjectSlug,
+      subjectName: subjectNames[subjectSlug as SubjectSlug],
+      topicName: subtopic.name,
+      estimatedMinutes: subtopic.estimatedMinutes,
+      objectives: [`Revisar os principais conceitos de ${subtopic.name}`],
+      body: [
+        { type: "heading", text: subtopic.name },
+        {
+          type: "paragraph",
+          text: `Assista à videoaula acima para revisar ${subtopic.name.toLowerCase()}. Conteúdo pelo canal ${subtopic.channel}.`,
+        },
+      ] satisfies ContentBlock[],
+      accessibleText: `Videoaula "${subtopic.videoTitle}", do canal ${subtopic.channel}, sobre ${subtopic.name}.`,
+      sourceUrl: subtopic.videoUrl,
+      rightsStatus: "official_link" as const,
+      version: 1,
+      mediaUrl: subtopic.videoUrl as string | null,
+    })),
+);
+
 export const demoLessons = [
   {
     id: "c69e0764-0cbe-4be3-a81d-a4d81879d061",
@@ -45,5 +86,7 @@ export const demoLessons = [
       "https://curriculo.sedu.es.gov.br/curriculo/wp-content/uploads/2020/02/BNCC_EnsinoMedio_embaixa_site_110518.pdf",
     rightsStatus: "platform_authored" as const,
     version: 1,
+    mediaUrl: null as string | null,
   },
+  ...demoVideoLessons,
 ];

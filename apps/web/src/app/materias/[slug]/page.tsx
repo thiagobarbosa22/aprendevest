@@ -35,7 +35,10 @@ export default async function SubjectPage({
                 href={`/aulas/${lesson.slug}`}
                 className="block rounded-lg bg-[var(--color-surface-muted)] p-4"
               >
-                <strong>{lesson.title}</strong>
+                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-secondary)]">
+                  {lesson.topicName}
+                </p>
+                <strong className="mt-1 block">{lesson.title}</strong>
                 <p className="mt-1 text-sm text-[var(--color-text-muted)]">
                   {lesson.estimatedMinutes} min · {lesson.summary}
                 </p>
