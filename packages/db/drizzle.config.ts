@@ -1,11 +1,14 @@
 import { defineConfig } from "drizzle-kit";
 import { config } from "dotenv";
 
-config({ path: "../../.env", quiet: true });
+config({ path: ["../../.env.local", "../../.env"], quiet: true });
 
-if (!process.env.DATABASE_URL) {
+const migrationDatabaseUrl =
+  process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
+
+if (!migrationDatabaseUrl) {
   throw new Error(
-    "DATABASE_URL é obrigatória para gerar ou executar migrações.",
+    "DATABASE_URL_UNPOOLED ou DATABASE_URL é obrigatória para gerar ou executar migrações.",
   );
 }
 
@@ -14,7 +17,7 @@ export default defineConfig({
   out: "./migrations",
   schema: "./src/schema/**/*.ts",
   dbCredentials: {
-    url: process.env.DATABASE_URL,
+    url: migrationDatabaseUrl,
   },
   strict: true,
   verbose: true,

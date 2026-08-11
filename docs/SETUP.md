@@ -25,6 +25,7 @@ A aplicação usa `http://localhost:3000`. Sem `DATABASE_URL`, ela ainda inicia 
 | Nome                     | Obrigatória em runtime | Finalidade                                                              |
 | ------------------------ | ---------------------- | ----------------------------------------------------------------------- |
 | `DATABASE_URL`           | Sim para prontidão     | Conexão PostgreSQL; nunca é enviada ao cliente                          |
+| `DATABASE_URL_UNPOOLED`  | Somente em migrações   | Conexão direta opcional para Drizzle em bancos com pooler               |
 | `APP_URL`                | Sim em produção        | URL pública dos metadados sociais; padrão local `http://localhost:3000` |
 | `APP_VERSION`            | Não                    | Versão exibida no diagnóstico; padrão `0.1.0`                           |
 | `SEED_EDITOR_PASSWORD`   | Somente no seed        | Senha local do editor sintético; nunca reutilizar em produção           |
@@ -43,6 +44,10 @@ corepack pnpm db:seed     # catálogo e contas editoriais sintéticas
 ```
 
 Docker não é obrigatório para compilar a aplicação, mas PostgreSQL é necessário para cadastro, sessão e demais dados persistentes. Se `docker` não estiver instalado, use uma instância PostgreSQL 17 compatível e ajuste `DATABASE_URL`.
+
+No Neon, `npx neonctl@latest init` vincula o projeto e `npx -y neon env pull`
+grava as conexões em `.env.local`. A aplicação usa `DATABASE_URL` com pooler;
+as migrações preferem `DATABASE_URL_UNPOOLED`.
 
 ## Estrutura
 

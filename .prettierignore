@@ -1,4 +1,5 @@
 .codex/
+.agents/
 .next/
 .overclock-app/
 node_modules/

@@ -20,7 +20,7 @@ import {
   users,
 } from "./schema";
 
-config({ path: "../../.env", quiet: true });
+config({ path: ["../../.env.local", "../../.env"], quiet: true });
 
 function derive(password: string, salt: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
