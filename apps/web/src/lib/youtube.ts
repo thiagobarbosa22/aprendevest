@@ -34,3 +34,8 @@ export function toYoutubeEmbedUrl(url: string): string | null {
   const id = toYoutubeVideoId(url);
   return id ? `https://www.youtube.com/embed/${id}` : null;
 }
+
+export function toYoutubeThumbnailUrl(url: string): string | null {
+  const id = toYoutubeVideoId(url);
+  return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : null;
+}

@@ -11,6 +11,7 @@
   --color-success: #16a34a;
   --color-bg: #ffffff;
   --color-surface: #f8fafc;
+  --color-surface-muted: #eef2f7;
   --color-text: #0f172a;
   --color-text-muted: #475569;
   --color-border: #e2e8f0;
@@ -29,6 +30,7 @@
   :root {
     --color-bg: #0b1220;
     --color-surface: #111827;
+    --color-surface-muted: #182235;
     --color-text: #e2e8f0;
     --color-text-muted: #94a3b8;
     --color-border: #1f2937;

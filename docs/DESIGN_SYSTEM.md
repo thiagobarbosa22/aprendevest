@@ -8,17 +8,18 @@ Organizado, confiável, claro, motivador sem pressão, fácil de usar, focado em
 
 ## Cor
 
-| Token              | Uso                                              | Hex (base)                                                                       |
-| ------------------ | ------------------------------------------------ | -------------------------------------------------------------------------------- |
-| `color-primary`    | ações principais, links, foco                    | Azul profundo `#1E3A8A`                                                          |
-| `color-secondary`  | progresso, sucesso, domínio                      | Verde-petróleo `#0F766E`                                                         |
-| `color-accent`     | destaques, badges, alertas de atenção (não erro) | Âmbar `#D97706`                                                                  |
-| `color-danger`     | erro, ação destrutiva                            | Vermelho `#DC2626`                                                               |
-| `color-success`    | confirmação, acerto                              | Verde `#16A34A` (distinto de secondary p/ não confundir "progresso" com "certo") |
-| `color-bg`         | fundo padrão                                     | `#FFFFFF` / dark `#0B1220`                                                       |
-| `color-surface`    | cards, painéis                                   | `#F8FAFC` / dark `#111827`                                                       |
-| `color-text`       | texto principal                                  | `#0F172A` / dark `#E2E8F0`                                                       |
-| `color-text-muted` | texto secundário                                 | `#475569` / dark `#94A3B8`                                                       |
+| Token                 | Uso                                              | Hex (base)                                                                       |
+| --------------------- | ------------------------------------------------ | -------------------------------------------------------------------------------- |
+| `color-primary`       | ações principais, links, foco                    | Azul profundo `#1E3A8A`                                                          |
+| `color-secondary`     | progresso, sucesso, domínio                      | Verde-petróleo `#0F766E`                                                         |
+| `color-accent`        | destaques, badges, alertas de atenção (não erro) | Âmbar `#D97706`                                                                  |
+| `color-danger`        | erro, ação destrutiva                            | Vermelho `#DC2626`                                                               |
+| `color-success`       | confirmação, acerto                              | Verde `#16A34A` (distinto de secondary p/ não confundir "progresso" com "certo") |
+| `color-bg`            | fundo padrão                                     | `#FFFFFF` / dark `#0B1220`                                                       |
+| `color-surface`       | cards, painéis                                   | `#F8FAFC` / dark `#111827`                                                       |
+| `color-surface-muted` | fundo de item em lista, hover sutil              | `#EEF2F7` / dark `#182235`                                                       |
+| `color-text`          | texto principal                                  | `#0F172A` / dark `#E2E8F0`                                                       |
+| `color-text-muted`    | texto secundário                                 | `#475569` / dark `#94A3B8`                                                       |
 
 Regra: nenhum estado (erro/sucesso/pendente) depende só de cor — sempre ícone + texto também (spec: "não depender apenas de cores").
 Contraste mínimo AA (4.5:1 texto normal, 3:1 texto grande) — validar todo par texto/fundo antes de shippar.
