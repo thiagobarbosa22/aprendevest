@@ -77,6 +77,7 @@ export default function HomePage() {
             <Link href="/questoes">Questões</Link>
             <Link href="/provas">Provas anteriores</Link>
             <Link href="/simulados">Simulados</Link>
+            <Link href="/redacao">Redação</Link>
           </nav>
         </section>
 

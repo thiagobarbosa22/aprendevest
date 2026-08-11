@@ -26,3 +26,13 @@ test("simulados explicam autosave e levam ao fluxo autenticado", async ({
   await page.getByRole("link", { name: "Criar simulado" }).click();
   await expect(page).toHaveURL(/\/entrar/);
 });
+
+test("redação informa privacidade e correção humana", async ({ page }) => {
+  await page.goto("/redacao");
+  await expect(
+    page.getByRole("heading", { name: /escreva, revise/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/correção humana/i).first()).toBeVisible();
+  await page.getByRole("link", { name: "Começar redação" }).click();
+  await expect(page).toHaveURL(/\/entrar/);
+});

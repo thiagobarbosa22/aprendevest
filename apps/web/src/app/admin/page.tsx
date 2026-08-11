@@ -31,6 +31,15 @@ export default async function AdminPage() {
             Aulas, versões e publicação.
           </p>
         </Link>
+        <Link
+          href="/admin/recursos"
+          className="rounded-xl border border-[var(--color-border)] p-6"
+        >
+          <strong>Recursos em expansão</strong>
+          <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+            Estado de redação, IA, professores e pagamentos.
+          </p>
+        </Link>
       </div>
     </main>
   );

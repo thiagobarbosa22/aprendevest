@@ -53,6 +53,16 @@ export {
   updateSimulation,
 } from "./simulation/repository";
 export {
+  deleteUserEssay,
+  demoEssayTheme,
+  isFeatureEnabled,
+  listPublishedEssayThemes,
+  listFeatureStatuses,
+  listUserEssays,
+  saveEssaySubmission,
+  type FeatureKey,
+} from "./expansion/repository";
+export {
   completeProfile,
   createDatabaseSession,
   createStudent,

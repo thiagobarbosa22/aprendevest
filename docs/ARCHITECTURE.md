@@ -42,3 +42,4 @@ O primeiro recorte preserva as entidades normativas sem criar migrações premat
 - Escopo acadêmico amplo: entregar primeiro uma jornada pequena com dados sintéticos e conteúdo revisado.
 - Divergência frontend/backend: contrato executável antes da tela e fixtures importadas do pacote compartilhado.
 - IA precoce: manter fora do núcleo até existir corpus revisado, avaliação e fallback.
+- Expansões ficam em `expansion`, atrás de feature flags; redações privadas não dependem de IA, professores ou cobrança.

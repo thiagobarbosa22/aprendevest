@@ -58,6 +58,8 @@
 - Playwright desktop/mobile no CI, runbooks de implantação, backup/restore e resposta a incidente.
 - **Saída demonstrada:** gate técnico e jornadas públicas E2E verdes; operação e recuperação possuem procedimentos reproduzíveis.
 
-## Fase 9 — Expansões protegidas por feature flag
+## Fase 9 — Expansões protegidas por feature flag (concluída em 2026-08-11)
 
-- Redação, tutor com IA, professores, pagamentos e novos exames, sem dependência para o núcleo.
+- Redação autoral com tema versionado, rascunho privado, envio humano, histórico e exclusão pelo titular.
+- Flags persistidas e sobrescritas por ambiente; IA, professores e pagamentos iniciam desligados e não afetam o núcleo.
+- **Saída demonstrada:** redação funciona sem IA/serviço pago e a administração visualiza o estado dos rollouts.

@@ -36,3 +36,9 @@ export {
   type PlannedTask,
   type PlanTopic,
 } from "./study-plan/planner";
+export {
+  essayWordCount,
+  totalRubricScore,
+  validateEssayDraft,
+  type EssayRubricScore,
+} from "./essays/essay";

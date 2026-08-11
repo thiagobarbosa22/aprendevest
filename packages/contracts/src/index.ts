@@ -42,3 +42,4 @@ export {
   type SimulationStartInput,
   type SimulationUpdateInput,
 } from "./simulation";
+export { essayDraftSchema, type EssayDraftInput } from "./essay";

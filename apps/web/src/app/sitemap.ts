@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/questoes",
     "/provas",
     "/simulados",
+    "/redacao",
   ].map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(),

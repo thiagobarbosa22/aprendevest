@@ -4,7 +4,7 @@ Plataforma web de preparação para vestibulares, construída em fases a partir 
 
 ## Estado atual
 
-As Fases 0–7 estabelecem identidade, catálogo/CMS, aulas, questões, provas anteriores, diagnóstico, plano adaptativo, revisão espaçada, desempenho explicável e simulados com autosave e análise.
+As Fases 0–9 entregam a jornada integrada de identidade, catálogo/CMS, aulas, questões, provas, plano adaptativo, revisão, desempenho, simulados, qualidade operacional e redação protegida por feature flag.
 
 ## Início rápido
 
@@ -31,3 +31,5 @@ corepack pnpm check
 ```
 
 Consulte [docs/SETUP.md](docs/SETUP.md) para configuração, [docs/TESTING.md](docs/TESTING.md) para testes, [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) para implantação e [docs/OPERATIONS.md](docs/OPERATIONS.md) para backup/incidentes.
+
+O inventário final, limitações e próximos passos estão em [docs/FINAL_REPORT.md](docs/FINAL_REPORT.md).

@@ -58,3 +58,7 @@ Registra tentativa autenticada com chave UUID de idempotência, versão da quest
 
 - `POST` valida modo, quantidade e duração; cria uma composição versionada autenticada.
 - `PATCH /:runId` persiste respostas/tempo e, com `submit: true`, finaliza com análise imutável.
+
+## Redação e expansões
+
+Redações usam Server Actions autenticadas, schema compartilhado e autorização por titular. Flags podem ser sobrescritas por `FEATURE_*`; módulos desligados não alteram os contratos do núcleo.

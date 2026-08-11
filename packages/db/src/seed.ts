@@ -11,6 +11,8 @@ import {
   examEditions,
   examPaperQuestions,
   examPapers,
+  essayThemes,
+  featureFlags,
   profiles,
   questions,
   subjects,
@@ -411,6 +413,59 @@ async function seed() {
           .onConflictDoNothing();
     }
   }
+
+  await getDatabase()
+    .insert(featureFlags)
+    .values([
+      {
+        key: "essays",
+        description: "Módulo privado de redação e correção humana.",
+        enabled: true,
+        rolloutPercent: 100,
+        updatedBy: editorId,
+      },
+      {
+        key: "ai_tutor",
+        description: "Tutor RAG; permanece desligado sem avaliação editorial.",
+        enabled: false,
+        rolloutPercent: 0,
+        updatedBy: editorId,
+      },
+      {
+        key: "teachers",
+        description: "Painel de professores e turmas.",
+        enabled: false,
+        rolloutPercent: 0,
+        updatedBy: editorId,
+      },
+      {
+        key: "billing",
+        description: "Cobrança opcional sem bloquear o núcleo gratuito.",
+        enabled: false,
+        rolloutPercent: 0,
+        updatedBy: editorId,
+      },
+    ])
+    .onConflictDoNothing();
+
+  await getDatabase()
+    .insert(essayThemes)
+    .values({
+      slug: "tecnologia-e-participacao-cidada",
+      title: "Tecnologia e participação cidadã no Brasil",
+      prompt:
+        "Produza um texto dissertativo-argumentativo sobre como a tecnologia pode ampliar a participação cidadã sem aprofundar desigualdades.",
+      supportingTexts: [],
+      examLabel: "Tema autoral demonstrativo",
+      sourceUrl: "https://aprendevest.com/metodologia",
+      rightsStatus: "platform_authored",
+      status: "published",
+      authorId: editorId,
+      reviewerId,
+      verifiedAt: now,
+      publishedAt: now,
+    })
+    .onConflictDoNothing();
 }
 
 seed()

@@ -98,6 +98,15 @@ export default async function StudentHomePage() {
               Cronômetro, autosave, correção e análise.
             </p>
           </Link>
+          <Link
+            href="/app/redacao"
+            className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
+          >
+            <strong>Redação</strong>
+            <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+              Rascunhos privados e correção humana.
+            </p>
+          </Link>
         </section>
       )}
     </main>

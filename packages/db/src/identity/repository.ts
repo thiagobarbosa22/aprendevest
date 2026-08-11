@@ -3,10 +3,21 @@ import { and, eq, gt, isNull, sql } from "drizzle-orm";
 import { getDatabase } from "../client";
 import {
   auditEvents,
+  attempts,
   consents,
+  contentProgress,
+  errorNotebook,
+  essayCorrections,
+  essaySubmissions,
+  examRuns,
+  mastery,
   privacyRequests,
   profiles,
+  reviewItems,
   sessions,
+  simulationRuns,
+  studyPlans,
+  studyTasks,
   users,
 } from "../schema";
 
@@ -180,6 +191,40 @@ export async function getUserPrivacyExport(userId: string) {
     })
     .from(consents)
     .where(eq(consents.userId, userId));
+  const [
+    attemptHistory,
+    lessonProgress,
+    errors,
+    exams,
+    simulations,
+    plans,
+    tasks,
+    masteryHistory,
+    reviews,
+    essays,
+  ] = await Promise.all([
+    db.select().from(attempts).where(eq(attempts.userId, userId)),
+    db.select().from(contentProgress).where(eq(contentProgress.userId, userId)),
+    db.select().from(errorNotebook).where(eq(errorNotebook.userId, userId)),
+    db.select().from(examRuns).where(eq(examRuns.userId, userId)),
+    db.select().from(simulationRuns).where(eq(simulationRuns.userId, userId)),
+    db.select().from(studyPlans).where(eq(studyPlans.userId, userId)),
+    db
+      .select({ task: studyTasks })
+      .from(studyTasks)
+      .innerJoin(studyPlans, eq(studyTasks.planId, studyPlans.id))
+      .where(eq(studyPlans.userId, userId)),
+    db.select().from(mastery).where(eq(mastery.userId, userId)),
+    db.select().from(reviewItems).where(eq(reviewItems.userId, userId)),
+    db
+      .select({ submission: essaySubmissions, correction: essayCorrections })
+      .from(essaySubmissions)
+      .leftJoin(
+        essayCorrections,
+        eq(essaySubmissions.id, essayCorrections.submissionId),
+      )
+      .where(eq(essaySubmissions.userId, userId)),
+  ]);
 
   await db.insert(privacyRequests).values({
     userId,
@@ -191,6 +236,18 @@ export async function getUserPrivacyExport(userId: string) {
   return {
     account,
     consents: consentHistory,
+    learning: {
+      attempts: attemptHistory,
+      contentProgress: lessonProgress,
+      errorNotebook: errors,
+      examRuns: exams,
+      simulationRuns: simulations,
+      studyPlans: plans,
+      studyTasks: tasks.map((item) => item.task),
+      mastery: masteryHistory,
+      reviews,
+      essays,
+    },
     exportedAt: new Date().toISOString(),
   };
 }
