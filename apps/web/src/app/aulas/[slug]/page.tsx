@@ -36,6 +36,8 @@ export default async function LessonPage({
       <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <article>
           <p className="text-sm font-semibold uppercase tracking-wide text-[var(--color-secondary)]">
+            {lesson.subjectName}
+            {lesson.frenteName ? ` · ${lesson.frenteName}` : ""} ·{" "}
             {lesson.topicName} · {lesson.estimatedMinutes} min
           </p>
           <h1 className="mt-3 text-4xl font-bold">{lesson.title}</h1>

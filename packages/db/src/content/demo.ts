@@ -21,6 +21,7 @@ const demoVideoLessons = Object.entries(lessonVideosBySubject).flatMap(
       subjectSlug,
       subjectName: subjectNames[subjectSlug as SubjectSlug],
       topicName: subtopic.name,
+      frenteName: subtopic.frenteName as string | null,
       estimatedMinutes: subtopic.estimatedMinutes,
       objectives: [`Revisar os principais conceitos de ${subtopic.name}`],
       body: [
@@ -48,6 +49,7 @@ export const demoLessons = [
     subjectSlug: "matematica",
     subjectName: "Matemática",
     topicName: "Funções",
+    frenteName: "Funções" as string | null,
     estimatedMinutes: 25,
     objectives: [
       "Reconhecer uma função",

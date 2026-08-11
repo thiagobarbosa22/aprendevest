@@ -9,6 +9,7 @@ import {
   mergeContentProgress,
 } from "@aprendevest/domain";
 import { and, asc, eq } from "drizzle-orm";
+import { alias } from "drizzle-orm/pg-core";
 
 import { getDatabase, isDatabaseConfigured } from "../client";
 import {
@@ -22,6 +23,8 @@ import {
   topics,
 } from "../schema";
 import { demoLessons } from "./demo";
+
+const frenteTopics = alias(topics, "frente_topics");
 
 export async function listPublishedLessons(subjectSlug?: string) {
   if (!isDatabaseConfigured()) {
@@ -38,6 +41,7 @@ export async function listPublishedLessons(subjectSlug?: string) {
       subjectSlug: subjects.slug,
       subjectName: subjects.name,
       topicName: topics.name,
+      frenteName: frenteTopics.name,
       estimatedMinutes: contentItems.estimatedMinutes,
       objectives: contentItems.objectives,
       body: contentItems.body,
@@ -50,6 +54,7 @@ export async function listPublishedLessons(subjectSlug?: string) {
     .from(contentItems)
     .innerJoin(topics, eq(contentItems.topicId, topics.id))
     .innerJoin(subjects, eq(topics.subjectId, subjects.id))
+    .leftJoin(frenteTopics, eq(topics.parentId, frenteTopics.id))
     .where(eq(contentItems.status, "published"))
     .orderBy(asc(contentItems.title));
   return subjectSlug

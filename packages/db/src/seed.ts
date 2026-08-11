@@ -271,7 +271,10 @@ async function seed() {
         verifiedAt: now,
         publishedAt: now,
       })
-      .onConflictDoNothing()
+      .onConflictDoUpdate({
+        target: subjects.slug,
+        set: { name, area, summary, updatedAt: now },
+      })
       .returning({ id: subjects.id });
     if (!subject) continue;
     const [fundamentosTopic] = await getDatabase()
@@ -282,6 +285,10 @@ async function seed() {
         name: `Fundamentos de ${name}`,
         summary: `Base conceitual para iniciar os estudos de ${name}.`,
         status: "published",
+      })
+      .onConflictDoUpdate({
+        target: [topics.subjectId, topics.slug],
+        set: { updatedAt: now },
       })
       .returning({ id: topics.id });
     if (!fundamentosTopic) continue;
@@ -307,7 +314,10 @@ async function seed() {
           reviewerId,
           publishedAt: now,
         })
-        .onConflictDoNothing()
+        .onConflictDoUpdate({
+          target: questions.checksum,
+          set: { updatedAt: now },
+        })
         .returning({ id: questions.id });
       if (insertedQuestion) {
         questionIdsByDifficulty[bankQuestion.difficulty].push(
@@ -328,21 +338,50 @@ async function seed() {
         objectives: [`Revisar os temas centrais de ${name} por vídeo`],
         status: "published",
       })
-      .onConflictDoNothing()
+      .onConflictDoUpdate({
+        target: [curriculumModules.subjectId, curriculumModules.slug],
+        set: { updatedAt: now },
+      })
       .returning({ id: curriculumModules.id });
     if (!videoModule) continue;
 
+    // Frente = grouping topic above the módulo (Área → Matéria → Frente → Módulo → Aula).
+    const frenteIdBySlug = new Map<string, string>();
     for (const subtopic of subtopics) {
+      if (frenteIdBySlug.has(subtopic.frenteSlug)) continue;
+      const [frente] = await getDatabase()
+        .insert(topics)
+        .values({
+          subjectId: subject.id,
+          slug: subtopic.frenteSlug,
+          name: subtopic.frenteName,
+          summary: `Frente de ${name}: ${subtopic.frenteName}.`,
+          status: "published",
+        })
+        .onConflictDoUpdate({
+          target: [topics.subjectId, topics.slug],
+          set: { name: subtopic.frenteName, updatedAt: now },
+        })
+        .returning({ id: topics.id });
+      if (frente) frenteIdBySlug.set(subtopic.frenteSlug, frente.id);
+    }
+
+    for (const subtopic of subtopics) {
+      const parentId = frenteIdBySlug.get(subtopic.frenteSlug) ?? null;
       const [topic] = await getDatabase()
         .insert(topics)
         .values({
           subjectId: subject.id,
+          parentId,
           slug: subtopic.slug,
           name: subtopic.name,
           summary: `Tópico de ${name} recorrente no ENEM e em vestibulares: ${subtopic.name}.`,
           status: "published",
         })
-        .onConflictDoNothing()
+        .onConflictDoUpdate({
+          target: [topics.subjectId, topics.slug],
+          set: { parentId, updatedAt: now },
+        })
         .returning({ id: topics.id });
       if (!topic) continue;
       await getDatabase()
@@ -373,7 +412,10 @@ async function seed() {
           verifiedAt: now,
           publishedAt: now,
         })
-        .onConflictDoNothing();
+        .onConflictDoUpdate({
+          target: contentItems.slug,
+          set: { updatedAt: now },
+        });
     }
   }
 
