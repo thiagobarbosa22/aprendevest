@@ -1,9 +1,6 @@
 import type { ContentBlock } from "@aprendevest/contracts";
 
-import {
-  lessonVideosBySubject,
-  type SubjectSlug,
-} from "./lesson-videos";
+import { lessonVideosBySubject, type SubjectSlug } from "./lesson-videos";
 
 const subjectNames: Record<SubjectSlug, string> = {
   matematica: "Matemática",

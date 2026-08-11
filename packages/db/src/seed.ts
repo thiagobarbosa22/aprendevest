@@ -19,7 +19,10 @@ import {
   topics,
   users,
 } from "./schema";
-import { lessonVideosBySubject, type SubjectSlug } from "./content/lesson-videos";
+import {
+  lessonVideosBySubject,
+  type SubjectSlug,
+} from "./content/lesson-videos";
 
 config({ path: ["../../.env.local", "../../.env"], quiet: true });
 
