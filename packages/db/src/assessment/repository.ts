@@ -3,25 +3,33 @@ import { evaluateObjectiveAnswer } from "@aprendevest/domain";
 import { and, desc, eq, isNull } from "drizzle-orm";
 import { getDatabase, isDatabaseConfigured } from "../client";
 import { attempts, errorNotebook, questions, topics } from "../schema";
+import { questionBankBySubject } from "./question-bank";
 
-export const demoQuestion = {
-  id: "16f7773a-9af4-4e27-b760-cfa965fa42b7",
-  prompt: "Considere f(x) = 2x + 1. Qual é o valor de f(3)?",
-  options: [
-    { id: "a", text: "5" },
-    { id: "b", text: "6" },
-    { id: "c", text: "7" },
-    { id: "d", text: "8" },
-  ],
-  difficulty: 1,
-  topicName: "Funções",
-  sourceUrl: "https://aprendevest.com/conteudo-autoral",
-  rightsStatus: "platform_authored" as const,
-  version: 1,
+const subjectNames: Record<string, string> = {
+  matematica: "Matemática",
+  "lingua-portuguesa": "Língua Portuguesa",
+  biologia: "Biologia",
+  historia: "História",
+  quimica: "Química",
+  fisica: "Física",
 };
 
+export const demoQuestions = Object.entries(questionBankBySubject).flatMap(
+  ([subjectSlug, bankQuestions]) =>
+    bankQuestions.map((question) => ({
+      id: `demo-${subjectSlug}-${question.slug}`,
+      prompt: question.prompt,
+      options: question.options,
+      difficulty: question.difficulty,
+      topicName: subjectNames[subjectSlug] ?? subjectSlug,
+      sourceUrl: "https://aprendevest.com/conteudo-autoral",
+      rightsStatus: "platform_authored" as const,
+      version: 1,
+    })),
+);
+
 export async function listPublishedQuestions() {
-  if (!isDatabaseConfigured()) return [demoQuestion];
+  if (!isDatabaseConfigured()) return demoQuestions;
   return getDatabase()
     .select({
       id: questions.id,

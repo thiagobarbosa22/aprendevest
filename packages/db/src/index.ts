@@ -24,7 +24,7 @@ export {
   transitionContentStatus,
 } from "./content/repository";
 export {
-  demoQuestion,
+  demoQuestions,
   listErrors,
   listPublishedQuestions,
   submitQuestionAttempt,

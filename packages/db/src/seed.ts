@@ -1,4 +1,4 @@
-import { randomBytes, scrypt as scryptCallback } from "node:crypto";
+import { createHash, randomBytes, scrypt as scryptCallback } from "node:crypto";
 import { config } from "dotenv";
 import { and, eq, sql } from "drizzle-orm";
 
@@ -23,6 +23,11 @@ import {
   lessonVideosBySubject,
   type SubjectSlug,
 } from "./content/lesson-videos";
+import { questionBankBySubject } from "./assessment/question-bank";
+
+function checksumFor(input: string): string {
+  return createHash("sha256").update(input).digest("hex");
+}
 
 config({ path: ["../../.env.local", "../../.env"], quiet: true });
 
@@ -208,6 +213,8 @@ async function seed() {
     ],
   ] as const;
 
+  const mediumQuestionIdBySubject = new Map<SubjectSlug, string>();
+
   for (const [slug, name, area, summary] of subjectData) {
     const [subject] = await getDatabase()
       .insert(subjects)
@@ -228,7 +235,7 @@ async function seed() {
       .onConflictDoNothing()
       .returning({ id: subjects.id });
     if (!subject) continue;
-    await getDatabase()
+    const [fundamentosTopic] = await getDatabase()
       .insert(topics)
       .values({
         subjectId: subject.id,
@@ -236,7 +243,37 @@ async function seed() {
         name: `Fundamentos de ${name}`,
         summary: `Base conceitual para iniciar os estudos de ${name}.`,
         status: "published",
-      });
+      })
+      .returning({ id: topics.id });
+    if (!fundamentosTopic) continue;
+
+    for (const bankQuestion of questionBankBySubject[slug as SubjectSlug] ??
+      []) {
+      const [insertedQuestion] = await getDatabase()
+        .insert(questions)
+        .values({
+          topicId: fundamentosTopic.id,
+          type: "multiple_choice",
+          prompt: bankQuestion.prompt,
+          options: bankQuestion.options,
+          correctAnswer: bankQuestion.correctAnswer,
+          resolution: bankQuestion.resolution,
+          commonError: bankQuestion.commonError,
+          difficulty: bankQuestion.difficulty,
+          sourceUrl: "https://aprendevest.com/conteudo-autoral",
+          checksum: checksumFor(`${slug}-${bankQuestion.slug}`),
+          rightsStatus: "platform_authored",
+          status: "published",
+          authorId: editorId,
+          reviewerId,
+          publishedAt: now,
+        })
+        .onConflictDoNothing()
+        .returning({ id: questions.id });
+      if (insertedQuestion && bankQuestion.difficulty === 2) {
+        mediumQuestionIdBySubject.set(slug as SubjectSlug, insertedQuestion.id);
+      }
+    }
 
     const subtopics = lessonVideosBySubject[slug as SubjectSlug] ?? [];
     if (!subtopics.length) continue;
@@ -486,6 +523,85 @@ async function seed() {
             position: 1,
           })
           .onConflictDoNothing();
+    }
+  }
+
+  const practiceQuestionIds = [...mediumQuestionIdBySubject.values()];
+
+  const [fuvest] = await getDatabase()
+    .select({ id: exams.id })
+    .from(exams)
+    .where(eq(exams.slug, "fuvest"))
+    .limit(1);
+
+  const pastPapers = [
+    ...(enem
+      ? [2022, 2023, 2024].map((year) => ({
+          examId: enem.id,
+          slug: `enem-${year}`,
+          title: `ENEM ${year} — 1º dia (caderno azul)`,
+          day: 1,
+          phase: null as string | null,
+          durationMinutes: 330,
+          officialUrl:
+            "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos",
+          rulesSourceUrl:
+            "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos",
+          editionLabel: `${year}`,
+          year,
+        }))
+      : []),
+    ...(fuvest
+      ? [2023, 2024].map((year) => ({
+          examId: fuvest.id,
+          slug: `fuvest-${year}`,
+          title: `FUVEST ${year} — 1ª fase`,
+          day: 1,
+          phase: "1ª fase",
+          durationMinutes: 300,
+          officialUrl: "https://www.fuvest.br/acervo",
+          rulesSourceUrl: "https://www.fuvest.br/acervo",
+          editionLabel: `${year}`,
+          year,
+        }))
+      : []),
+  ];
+
+  for (const past of pastPapers) {
+    const [pastEdition] = await getDatabase()
+      .insert(examEditions)
+      .values({
+        examId: past.examId,
+        year: past.year,
+        editionLabel: past.editionLabel,
+        rulesSourceUrl: past.rulesSourceUrl,
+        verifiedAt: now,
+      })
+      .onConflictDoNothing()
+      .returning({ id: examEditions.id });
+    if (!pastEdition) continue;
+    const [pastPaper] = await getDatabase()
+      .insert(examPapers)
+      .values({
+        editionId: pastEdition.id,
+        slug: past.slug,
+        title: past.title,
+        phase: past.phase,
+        day: past.day,
+        durationMinutes: past.durationMinutes,
+        officialUrl: past.officialUrl,
+        checksum: checksumFor(past.slug),
+        rightsStatus: "official_link",
+        status: "published",
+      })
+      .onConflictDoNothing()
+      .returning({ id: examPapers.id });
+    if (!pastPaper) continue;
+    for (const [position, questionId] of practiceQuestionIds.entries()) {
+      await getDatabase()
+        .insert(examPaperQuestions)
+        .values({ paperId: pastPaper.id, questionId, position: position + 1 })
+        .onConflictDoNothing();
     }
   }
 

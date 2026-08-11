@@ -23,8 +23,38 @@ export const demoPaper = {
   rightsStatus: "official_link" as const,
   version: 1,
 };
+
+const enemOfficialUrl =
+  "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos";
+
+export const demoPapers = [
+  demoPaper,
+  ...[2022, 2023, 2024].map((year) => ({
+    id: `demo-enem-${year}`,
+    slug: `enem-${year}`,
+    title: `ENEM ${year} — 1º dia (caderno azul)`,
+    acronym: "ENEM",
+    year,
+    durationMinutes: 330,
+    officialUrl: enemOfficialUrl,
+    rightsStatus: "official_link" as const,
+    version: 1,
+  })),
+  ...[2023, 2024].map((year) => ({
+    id: `demo-fuvest-${year}`,
+    slug: `fuvest-${year}`,
+    title: `FUVEST ${year} — 1ª fase`,
+    acronym: "FUVEST",
+    year,
+    durationMinutes: 300,
+    officialUrl: "https://www.fuvest.br/acervo",
+    rightsStatus: "official_link" as const,
+    version: 1,
+  })),
+];
+
 export async function listPublishedPapers() {
-  if (!isDatabaseConfigured()) return [demoPaper];
+  if (!isDatabaseConfigured()) return demoPapers;
   return getDatabase()
     .select({
       id: examPapers.id,
