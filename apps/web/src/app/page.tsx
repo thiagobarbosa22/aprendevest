@@ -1,4 +1,4 @@
-import { Button, Card, ProgressBar } from "@aprendevest/ui";
+import { Card, ProgressBar } from "@aprendevest/ui";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -41,7 +41,7 @@ export default function HomePage() {
       <main id="conteudo-principal" className="mx-auto max-w-5xl px-6 py-16">
         <section aria-labelledby="hero-heading" className="flex flex-col gap-6">
           <p className="text-sm font-semibold uppercase tracking-wider text-[var(--color-secondary)]">
-            Fase 0 · fundação
+            Preparação orientada
           </p>
           <h1
             id="hero-heading"
@@ -55,12 +55,18 @@ export default function HomePage() {
             prometer aprovação — com progresso que você consegue ver.
           </p>
           <div className="flex flex-wrap items-center gap-3">
-            <Button variant="primary" disabled>
-              Criar conta (chega na Fase 1)
-            </Button>
-            <Button variant="ghost" disabled>
+            <Link
+              href="/cadastro"
+              className="inline-flex min-h-11 items-center rounded-lg bg-[var(--color-primary)] px-5 py-3 font-semibold text-white"
+            >
+              Criar conta
+            </Link>
+            <Link
+              href="/entrar"
+              className="inline-flex min-h-11 items-center rounded-lg border border-[var(--color-border)] px-5 py-3 font-semibold"
+            >
               Já tenho conta
-            </Button>
+            </Link>
           </div>
         </section>
 
@@ -69,7 +75,7 @@ export default function HomePage() {
             Progresso da fundação técnica
           </h2>
           <ProgressBar
-            value={1}
+            value={2}
             max={10}
             label="Fases do plano técnico concluídas"
           />
@@ -142,8 +148,8 @@ export default function HomePage() {
 
       <footer className="mt-16 border-t border-[var(--color-border)] px-6 py-8">
         <p className="mx-auto max-w-5xl text-sm text-[var(--color-text-muted)]">
-          AprendeVest está em construção. Nenhum dado pessoal é coletado nesta
-          fase.
+          AprendeVest está em construção. Dados pessoais têm controle de
+          exportação e exclusão.
         </p>
       </footer>
     </>

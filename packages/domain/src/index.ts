@@ -4,3 +4,10 @@ export {
   type DatabaseHealthPort,
   type SystemHealth,
 } from "./system/check-system-health";
+export {
+  can,
+  permissions,
+  userRoles,
+  type Permission,
+  type UserRole,
+} from "./identity/permissions";

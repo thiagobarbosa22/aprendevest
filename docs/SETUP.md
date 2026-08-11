@@ -13,6 +13,7 @@ corepack enable
 corepack pnpm install
 Copy-Item .env.example .env
 docker compose up -d postgres
+corepack pnpm db:migrate
 corepack pnpm dev
 ```
 
@@ -27,6 +28,17 @@ A aplicação usa `http://localhost:3000`. Sem `DATABASE_URL`, ela ainda inicia 
 | `APP_VERSION`  | Não                    | Versão exibida no diagnóstico; padrão `0.1.0`                           |
 
 Segredos reais ficam fora do repositório. Novas variáveis precisam ser documentadas aqui e em `.env.example` com valor inofensivo.
+
+## Banco e migrações
+
+As migrações ficam em `packages/db/migrations` e são imutáveis depois de aplicadas em ambiente compartilhado.
+
+```powershell
+corepack pnpm db:generate # após alterar o schema Drizzle
+corepack pnpm db:migrate  # aplica somente migrações pendentes
+```
+
+Docker não é obrigatório para compilar a aplicação, mas PostgreSQL é necessário para cadastro, sessão e demais dados persistentes. Se `docker` não estiver instalado, use uma instância PostgreSQL 17 compatível e ajuste `DATABASE_URL`.
 
 ## Estrutura
 

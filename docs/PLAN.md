@@ -7,11 +7,12 @@
 - Design tokens e shell acessível em colaboração com o Claude.
 - **Saída demonstrada:** instalação reproduzível, CI versionado, formatação/lint/tipos/testes/build verdes, endpoint de diagnóstico e preview navegável.
 
-## Fase 1 — Identidade
+## Fase 1 — Identidade (concluída em 2026-08-11)
 
-- Sessões seguras, cadastro/login, perfil, RBAC e base LGPD.
-- Jornada mínima: conta → objetivo → trilha inicial explicada.
-- **Saída:** conta, privacidade e permissões cobertas por testes.
+- Sessões opacas persistidas, senha com scrypt, cadastro/login, perfil, RBAC e base LGPD.
+- Jornada mínima: conta → consentimento → objetivo → área do estudante.
+- Exportação estruturada, solicitação de exclusão, auditoria e proteção para menores por faixa etária.
+- **Saída demonstrada:** migração versionada, contratos, permissões, senha e ações de conta cobertos por testes; build gera rotas públicas e protegidas.
 
 ## Fase 2 — Catálogo e CMS básico
 

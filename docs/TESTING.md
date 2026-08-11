@@ -17,6 +17,7 @@ O gate só está verde quando todos os comandos terminam com código `0`. `corep
 
 - **Contratos:** aceita a resposta pública documentada e rejeita estados ou datas inválidos.
 - **Domínio:** converte o estado do banco em `ok` ou `degraded` e usa relógio injetável.
+- **Identidade:** valida cadastro/objetivo, separa permissões, protege senhas e cobre ações de conta com dependências isoladas.
 - **Build:** valida integração entre app, contratos, domínio e banco, além de gerar as rotas Next.js.
 
 ## Evolução obrigatória
@@ -30,4 +31,4 @@ Não considere permanência de tela como aprendizagem e não use fixtures que re
 
 ## Última execução da Fase 0
 
-Em 2026-08-11, `corepack pnpm check` concluiu lint, typecheck, testes e build com código `0`. O runtime respondeu `200` em `/`; sem banco configurado, `/api/v1/health` respondeu o `503 degraded/not_configured` previsto no contrato. A página renderizada contém idioma `pt-BR`, link de salto, região `main` e um único `h1`.
+Em 2026-08-11, `corepack pnpm check` concluiu formatação, lint, typecheck, testes e build com código `0`. O runtime respondeu `200` em `/`; sem banco configurado, `/api/v1/health` respondeu o `503 degraded/not_configured` previsto no contrato. A página renderizada contém idioma `pt-BR`, link de salto, região `main` e um único `h1`.
