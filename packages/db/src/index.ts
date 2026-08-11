@@ -33,6 +33,7 @@ export {
   demoPaper,
   getPaperQuestions,
   getPublishedPaper,
+  listExamsWithPracticeQuestions,
   listPublishedPapers,
   startExamRun,
   updateExamRun,

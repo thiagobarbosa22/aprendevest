@@ -97,6 +97,36 @@ export async function listPublishedPapers() {
 export async function getPublishedPaper(slug: string) {
   return (await listPublishedPapers()).find((p) => p.slug === slug) ?? null;
 }
+
+const demoExamSlugsWithPracticeQuestions = [
+  { slug: "enem", acronym: "ENEM" },
+  { slug: "fuvest", acronym: "FUVEST" },
+  { slug: "unicamp", acronym: "UNICAMP" },
+  { slug: "uerj", acronym: "UERJ" },
+];
+
+/**
+ * Vestibulares that actually have practice questions linked to one of
+ * their papers — the only ones a simulado can be filtered by. A published
+ * exam with no linked questions (e.g. one that only has a required-reading
+ * list) would otherwise 409 when picked in the simulado selector.
+ */
+export async function listExamsWithPracticeQuestions() {
+  if (!isDatabaseConfigured()) return demoExamSlugsWithPracticeQuestions;
+  return getDatabase()
+    .selectDistinct({ slug: exams.slug, acronym: exams.acronym })
+    .from(exams)
+    .innerJoin(examEditions, eq(examEditions.examId, exams.id))
+    .innerJoin(examPapers, eq(examPapers.editionId, examEditions.id))
+    .innerJoin(
+      examPaperQuestions,
+      eq(examPaperQuestions.paperId, examPapers.id),
+    )
+    .where(
+      and(eq(exams.status, "published"), eq(examPapers.status, "published")),
+    )
+    .orderBy(exams.acronym);
+}
 export async function startExamRun(userId: string, paperId: string) {
   const db = getDatabase();
   const [existing] = await db

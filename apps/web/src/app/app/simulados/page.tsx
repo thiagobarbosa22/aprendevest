@@ -1,4 +1,7 @@
-import { listPublishedExams, listSimulationHistory } from "@aprendevest/db";
+import {
+  listExamsWithPracticeQuestions,
+  listSimulationHistory,
+} from "@aprendevest/db";
 import Link from "next/link";
 import { SimulationRunner } from "../../_components/simulation-runner";
 import { requireUser } from "../../../lib/auth/guards";
@@ -8,7 +11,7 @@ export default async function SimulationsPage() {
   const user = await requireUser();
   const [history, exams] = await Promise.all([
     listSimulationHistory(user.userId),
-    listPublishedExams(),
+    listExamsWithPracticeQuestions(),
   ]);
   return (
     <main id="conteudo-principal" className="mx-auto max-w-5xl px-6 py-12">

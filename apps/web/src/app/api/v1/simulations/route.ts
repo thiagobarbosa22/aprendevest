@@ -23,7 +23,8 @@ export async function POST(request: Request) {
     return Response.json(await startSimulation(user.userId, parsed.data), {
       status: 201,
     });
-  } catch {
+  } catch (error) {
+    console.error("simulation-start failed", error);
     return Response.json(
       { error: "Não foi possível iniciar o simulado." },
       { status: 409 },
