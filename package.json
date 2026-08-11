@@ -1,0 +1,26 @@
+{
+  "name": "aprendevest",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.21.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "corepack pnpm --filter @aprendevest/web build",
+    "check": "corepack pnpm lint && corepack pnpm typecheck && corepack pnpm test && corepack pnpm build",
+    "db:generate": "corepack pnpm --filter @aprendevest/db db:generate",
+    "db:migrate": "corepack pnpm --filter @aprendevest/db db:migrate",
+    "dev": "corepack pnpm --filter @aprendevest/web dev",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "corepack pnpm -r --if-present lint",
+    "test": "corepack pnpm -r --if-present test",
+    "typecheck": "corepack pnpm -r --if-present typecheck"
+  },
+  "devDependencies": {
+    "@typescript/native": "npm:typescript@7.0.2",
+    "prettier": "3.9.6",
+    "typescript": "npm:@typescript/typescript6@6.0.2"
+  }
+}

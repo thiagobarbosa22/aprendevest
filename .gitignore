@@ -77,6 +77,7 @@ web_modules/
 # Next.js build output
 .next
 out
+next-env.d.ts
 
 # Nuxt.js build / generate output
 .nuxt
@@ -141,3 +142,9 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Overclock local coordination state
+.overclock-app/
+
+# Local extraction used while reviewing the product specification
+.codex/spec_extracted.txt

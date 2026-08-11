@@ -1,0 +1,42 @@
+# Configuração local
+
+## Requisitos
+
+- Node.js 22 ou superior.
+- Corepack (incluído no Node distribuído oficialmente).
+- Docker Desktop opcional para executar o PostgreSQL local.
+
+## Instalação
+
+```powershell
+corepack enable
+corepack pnpm install
+Copy-Item .env.example .env
+docker compose up -d postgres
+corepack pnpm dev
+```
+
+A aplicação usa `http://localhost:3000`. Sem `DATABASE_URL`, ela ainda inicia e compila, mas o endpoint `/api/v1/health` retorna `503` com o banco marcado como `not_configured`.
+
+## Variáveis
+
+| Nome           | Obrigatória em runtime | Finalidade                                                              |
+| -------------- | ---------------------- | ----------------------------------------------------------------------- |
+| `DATABASE_URL` | Sim para prontidão     | Conexão PostgreSQL; nunca é enviada ao cliente                          |
+| `APP_URL`      | Sim em produção        | URL pública dos metadados sociais; padrão local `http://localhost:3000` |
+| `APP_VERSION`  | Não                    | Versão exibida no diagnóstico; padrão `0.1.0`                           |
+
+Segredos reais ficam fora do repositório. Novas variáveis precisam ser documentadas aqui e em `.env.example` com valor inofensivo.
+
+## Estrutura
+
+```text
+apps/web/             aplicação web, área do aluno, admin e handlers HTTP
+packages/contracts/  schemas compartilhados nas fronteiras
+packages/domain/     regras e portas independentes de framework
+packages/db/         acesso PostgreSQL, schema e migrações
+packages/ui/         design system sob responsabilidade frontend
+docs/                decisões, contratos, operação e testes
+workers/             jobs assíncronos quando forem necessários
+tests/               integração, E2E e fixtures compartilhadas
+```

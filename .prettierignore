@@ -1,0 +1,6 @@
+.codex/
+.next/
+.overclock-app/
+node_modules/
+pnpm-lock.yaml
+*.docx
