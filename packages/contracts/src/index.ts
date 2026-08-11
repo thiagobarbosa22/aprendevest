@@ -14,3 +14,9 @@ export {
   type RegistrationInput,
   type UserRole,
 } from "./identity";
+export {
+  examDraftSchema,
+  subjectDraftSchema,
+  type ExamDraftInput,
+  type SubjectDraftInput,
+} from "./catalog";

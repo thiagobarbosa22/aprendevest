@@ -14,10 +14,12 @@
 - Exportação estruturada, solicitação de exclusão, auditoria e proteção para menores por faixa etária.
 - **Saída demonstrada:** migração versionada, contratos, permissões, senha e ações de conta cobertos por testes; build gera rotas públicas e protegidas.
 
-## Fase 2 — Catálogo e CMS básico
+## Fase 2 — Catálogo e CMS básico (concluída em 2026-08-11)
 
-- Vestibulares versionados, matérias/tópicos, workflow editorial e páginas públicas indexáveis.
-- **Saída:** editor publica um item rastreável sem editar código.
+- Vestibulares versionados, matérias, tópicos, habilidades, pré-requisitos, workflow editorial e páginas públicas.
+- CMS separa criação, envio para revisão, aprovação e publicação; cada transição gera snapshot e auditoria.
+- Seed sintético cria catálogo e papéis editor/revisor sem reproduzir material protegido.
+- **Saída demonstrada:** editor publica um vestibular rastreável sem editar código; páginas públicas leem o repositório e têm fallback demonstrativo sem banco.
 
 ## Fase 3 — Conteúdo e progresso
 

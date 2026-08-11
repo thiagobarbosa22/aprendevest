@@ -68,6 +68,13 @@ export default function HomePage() {
               Já tenho conta
             </Link>
           </div>
+          <nav
+            aria-label="Explorar conteúdo"
+            className="flex flex-wrap gap-4 text-sm font-semibold text-[var(--color-primary)]"
+          >
+            <Link href="/vestibulares">Vestibulares</Link>
+            <Link href="/materias">Matérias</Link>
+          </nav>
         </section>
 
         <section aria-labelledby="fase-heading" className="mt-16 max-w-md">

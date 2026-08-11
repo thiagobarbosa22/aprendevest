@@ -9,20 +9,23 @@
   "scripts": {
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx src/seed.ts",
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc --project tsconfig.json"
   },
   "dependencies": {
+    "@aprendevest/contracts": "workspace:*",
     "@aprendevest/domain": "workspace:*",
     "drizzle-orm": "0.45.2",
     "postgres": "3.4.9",
     "zod": "4.4.3"
   },
   "devDependencies": {
-    "@typescript/native": "npm:typescript@7.0.2",
     "@types/node": "26.2.0",
+    "@typescript/native": "npm:typescript@7.0.2",
     "dotenv": "17.4.2",
     "drizzle-kit": "0.31.10",
+    "tsx": "4.23.11",
     "typescript": "npm:@typescript/typescript6@6.0.2",
     "vitest": "4.1.10"
   }

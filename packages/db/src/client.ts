@@ -30,3 +30,7 @@ export function getDatabase(): Database {
 
   return globalDatabase.aprendeVestDatabase;
 }
+
+export function isDatabaseConfigured(): boolean {
+  return Boolean(process.env.DATABASE_URL);
+}

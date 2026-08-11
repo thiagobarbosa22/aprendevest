@@ -1,4 +1,15 @@
-export { getDatabase } from "./client";
+export { getDatabase, isDatabaseConfigured } from "./client";
+export {
+  createExamDraft,
+  createSubjectDraft,
+  getPublishedExam,
+  getPublishedSubject,
+  listEditorialExams,
+  listPublishedExams,
+  listPublishedSubjects,
+  publishExam,
+  transitionExamStatus,
+} from "./catalog/repository";
 export {
   completeProfile,
   createDatabaseSession,

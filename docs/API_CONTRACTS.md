@@ -29,6 +29,8 @@ Resposta `200` quando todas as dependências obrigatórias estão disponíveis:
 
 Resposta `503` quando o banco está ausente ou indisponível. O corpo mantém o mesmo schema; `status` será `degraded` e `checks.database` será `not_configured` ou `unavailable`.
 
-## Próximos contratos
+## GET `/api/v1/privacy/export`
 
-Fase 1: sessão, perfil, consentimentos e solicitações LGPD. Fase 2: catálogo editorial e páginas públicas. Contratos serão definidos antes das respectivas telas.
+Exige sessão válida e retorna, como anexo JSON sem cache, os dados de conta, perfil e histórico de consentimentos do titular. Nunca inclui senha ou tokens.
+
+O catálogo público é servido por Server Components sobre o mesmo repositório usado pelo CMS. Mutações editoriais usam Server Actions com schemas compartilhados, RBAC, concorrência otimista e auditoria.

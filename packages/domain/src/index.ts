@@ -11,3 +11,9 @@ export {
   type Permission,
   type UserRole,
 } from "./identity/permissions";
+export {
+  assertPublishableMetadata,
+  canTransitionEditorialStatus,
+  editorialStatuses,
+  type EditorialStatus,
+} from "./editorial/workflow";

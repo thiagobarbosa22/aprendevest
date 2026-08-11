@@ -14,6 +14,7 @@ corepack pnpm install
 Copy-Item .env.example .env
 docker compose up -d postgres
 corepack pnpm db:migrate
+corepack pnpm db:seed
 corepack pnpm dev
 ```
 
@@ -21,11 +22,13 @@ A aplicação usa `http://localhost:3000`. Sem `DATABASE_URL`, ela ainda inicia 
 
 ## Variáveis
 
-| Nome           | Obrigatória em runtime | Finalidade                                                              |
-| -------------- | ---------------------- | ----------------------------------------------------------------------- |
-| `DATABASE_URL` | Sim para prontidão     | Conexão PostgreSQL; nunca é enviada ao cliente                          |
-| `APP_URL`      | Sim em produção        | URL pública dos metadados sociais; padrão local `http://localhost:3000` |
-| `APP_VERSION`  | Não                    | Versão exibida no diagnóstico; padrão `0.1.0`                           |
+| Nome                     | Obrigatória em runtime | Finalidade                                                              |
+| ------------------------ | ---------------------- | ----------------------------------------------------------------------- |
+| `DATABASE_URL`           | Sim para prontidão     | Conexão PostgreSQL; nunca é enviada ao cliente                          |
+| `APP_URL`                | Sim em produção        | URL pública dos metadados sociais; padrão local `http://localhost:3000` |
+| `APP_VERSION`            | Não                    | Versão exibida no diagnóstico; padrão `0.1.0`                           |
+| `SEED_EDITOR_PASSWORD`   | Somente no seed        | Senha local do editor sintético; nunca reutilizar em produção           |
+| `SEED_REVIEWER_PASSWORD` | Somente no seed        | Senha local do revisor sintético; nunca reutilizar em produção          |
 
 Segredos reais ficam fora do repositório. Novas variáveis precisam ser documentadas aqui e em `.env.example` com valor inofensivo.
 
@@ -36,6 +39,7 @@ As migrações ficam em `packages/db/migrations` e são imutáveis depois de apl
 ```powershell
 corepack pnpm db:generate # após alterar o schema Drizzle
 corepack pnpm db:migrate  # aplica somente migrações pendentes
+corepack pnpm db:seed     # catálogo e contas editoriais sintéticas
 ```
 
 Docker não é obrigatório para compilar a aplicação, mas PostgreSQL é necessário para cadastro, sessão e demais dados persistentes. Se `docker` não estiver instalado, use uma instância PostgreSQL 17 compatível e ajuste `DATABASE_URL`.

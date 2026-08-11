@@ -11,6 +11,7 @@
     "check": "corepack pnpm format:check && corepack pnpm lint && corepack pnpm typecheck && corepack pnpm test && corepack pnpm build",
     "db:generate": "corepack pnpm --filter @aprendevest/db db:generate",
     "db:migrate": "corepack pnpm --filter @aprendevest/db db:migrate",
+    "db:seed": "corepack pnpm --filter @aprendevest/db db:seed",
     "dev": "corepack pnpm --filter @aprendevest/web dev",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
