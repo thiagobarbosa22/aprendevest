@@ -151,3 +151,4 @@ vite.config.ts.timestamp-*
 
 # Local extraction used while reviewing the product specification
 .codex/spec_extracted.txt
+.vercel
