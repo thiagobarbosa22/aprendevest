@@ -1,4 +1,4 @@
-import { listSimulationHistory } from "@aprendevest/db";
+import { listPublishedExams, listSimulationHistory } from "@aprendevest/db";
 import Link from "next/link";
 import { SimulationRunner } from "../../_components/simulation-runner";
 import { requireUser } from "../../../lib/auth/guards";
@@ -6,7 +6,10 @@ import { requireUser } from "../../../lib/auth/guards";
 export const metadata = { title: "Meus simulados" };
 export default async function SimulationsPage() {
   const user = await requireUser();
-  const history = await listSimulationHistory(user.userId);
+  const [history, exams] = await Promise.all([
+    listSimulationHistory(user.userId),
+    listPublishedExams(),
+  ]);
   return (
     <main id="conteudo-principal" className="mx-auto max-w-5xl px-6 py-12">
       <Link href="/app" className="text-sm font-semibold underline">
@@ -14,9 +17,10 @@ export default async function SimulationsPage() {
       </Link>
       <h1 className="mt-4 text-3xl font-bold">Simulados</h1>
       <p className="mt-2 text-[var(--color-text-muted)]">
-        Escolha um formato e receba análise imediata.
+        Escolha um vestibular e receba análise imediata com base em provas
+        anteriores do ENEM, FUVEST e outras instituições.
       </p>
-      <SimulationRunner />
+      <SimulationRunner exams={exams} />
       {history.length ? (
         <section className="mt-12">
           <h2 className="text-xl font-semibold">Histórico</h2>

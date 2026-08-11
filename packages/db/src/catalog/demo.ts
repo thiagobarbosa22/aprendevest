@@ -34,6 +34,37 @@ export const demoExams = [
     version: 1,
     verifiedAt: new Date("2026-08-01T00:00:00.000Z"),
   },
+  {
+    id: "demo-unicamp",
+    slug: "unicamp",
+    name: "Vestibular da Universidade Estadual de Campinas",
+    acronym: "UNICAMP",
+    institution: "Universidade Estadual de Campinas",
+    board: "COMVEST",
+    region: "São Paulo",
+    officialUrl: "https://www.comvest.unicamp.br/",
+    sourceUrl: "https://www.comvest.unicamp.br/vestibulares-anteriores/",
+    summary: "Seleção da Unicamp com primeira e segunda fases e redação.",
+    rightsStatus: "official_link" as const,
+    version: 1,
+    verifiedAt: new Date("2026-08-01T00:00:00.000Z"),
+  },
+  {
+    id: "demo-uerj",
+    slug: "uerj",
+    name: "Vestibular Estadual do Rio de Janeiro",
+    acronym: "UERJ",
+    institution: "Universidade do Estado do Rio de Janeiro",
+    board: "CEPUERJ",
+    region: "Rio de Janeiro",
+    officialUrl: "https://www.cepuerj.uerj.br/",
+    sourceUrl: "https://www.cepuerj.uerj.br/",
+    summary:
+      "Processo seletivo da UERJ com exame de qualificação e discursiva-objetiva.",
+    rightsStatus: "official_link" as const,
+    version: 1,
+    verifiedAt: new Date("2026-08-01T00:00:00.000Z"),
+  },
 ];
 
 export const demoSubjects = [

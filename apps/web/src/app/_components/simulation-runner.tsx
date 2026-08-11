@@ -14,13 +14,16 @@ type Result = {
   accuracyPercent: number;
 };
 
-export function SimulationRunner() {
+type ExamOption = { slug: string; acronym: string };
+
+export function SimulationRunner({ exams = [] }: { exams?: ExamOption[] }) {
   const [runId, setRunId] = useState("");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [mode, setMode] = useState("quick");
   const [questionCount, setQuestionCount] = useState(10);
   const [durationMinutes, setDurationMinutes] = useState(30);
+  const [examSlug, setExamSlug] = useState("");
   const [elapsed, setElapsed] = useState(0);
   const [status, setStatus] = useState("");
   const [result, setResult] = useState<Result | null>(null);
@@ -62,7 +65,12 @@ export function SimulationRunner() {
     const response = await fetch("/api/v1/simulations", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mode, questionCount, durationMinutes }),
+      body: JSON.stringify({
+        mode,
+        questionCount,
+        durationMinutes,
+        examSlug: examSlug || undefined,
+      }),
     });
     if (!response.ok) {
       setStatus(
@@ -100,7 +108,22 @@ export function SimulationRunner() {
     return (
       <section className="mt-8 rounded-xl border p-6">
         <h2 className="text-xl font-semibold">Configurar sessão</h2>
-        <div className="mt-5 grid gap-4 sm:grid-cols-3">
+        <div className="mt-5 grid gap-4 sm:grid-cols-4">
+          <label className="grid gap-2 text-sm">
+            Vestibular
+            <select
+              value={examSlug}
+              onChange={(event) => setExamSlug(event.target.value)}
+              className="rounded-lg border p-2"
+            >
+              <option value="">Geral (todas as matérias)</option>
+              {exams.map((exam) => (
+                <option key={exam.slug} value={exam.slug}>
+                  {exam.acronym} — provas anteriores
+                </option>
+              ))}
+            </select>
+          </label>
           <label className="grid gap-2 text-sm">
             Modo
             <select

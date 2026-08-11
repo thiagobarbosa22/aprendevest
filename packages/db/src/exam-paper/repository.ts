@@ -51,6 +51,28 @@ export const demoPapers = [
     rightsStatus: "official_link" as const,
     version: 1,
   })),
+  {
+    id: "demo-unicamp-2024",
+    slug: "unicamp-2024",
+    title: "UNICAMP 2024 — 1ª fase",
+    acronym: "UNICAMP",
+    year: 2024,
+    durationMinutes: 240,
+    officialUrl: "https://www.comvest.unicamp.br/vestibulares-anteriores/",
+    rightsStatus: "official_link" as const,
+    version: 1,
+  },
+  {
+    id: "demo-uerj-2024",
+    slug: "uerj-2024",
+    title: "UERJ 2024 — Exame de qualificação",
+    acronym: "UERJ",
+    year: 2024,
+    durationMinutes: 180,
+    officialUrl: "https://www.cepuerj.uerj.br/",
+    rightsStatus: "official_link" as const,
+    version: 1,
+  },
 ];
 
 export async function listPublishedPapers() {

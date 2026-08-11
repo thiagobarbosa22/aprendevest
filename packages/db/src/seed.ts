@@ -171,6 +171,41 @@ async function seed() {
         verifiedAt: now,
         publishedAt: now,
       },
+      {
+        slug: "unicamp",
+        name: "Vestibular da Universidade Estadual de Campinas",
+        acronym: "UNICAMP",
+        institution: "Universidade Estadual de Campinas",
+        board: "COMVEST",
+        region: "São Paulo",
+        officialUrl: "https://www.comvest.unicamp.br/",
+        sourceUrl: "https://www.comvest.unicamp.br/vestibulares-anteriores/",
+        summary: "Seleção da Unicamp com primeira e segunda fases e redação.",
+        rightsStatus: "official_link",
+        status: "published",
+        authorId: editorId,
+        reviewerId,
+        verifiedAt: now,
+        publishedAt: now,
+      },
+      {
+        slug: "uerj",
+        name: "Vestibular Estadual do Rio de Janeiro",
+        acronym: "UERJ",
+        institution: "Universidade do Estado do Rio de Janeiro",
+        board: "CEPUERJ",
+        region: "Rio de Janeiro",
+        officialUrl: "https://www.cepuerj.uerj.br/",
+        sourceUrl: "https://www.cepuerj.uerj.br/",
+        summary:
+          "Processo seletivo da UERJ com exame de qualificação e discursiva-objetiva.",
+        rightsStatus: "official_link",
+        status: "published",
+        authorId: editorId,
+        reviewerId,
+        verifiedAt: now,
+        publishedAt: now,
+      },
     ])
     .onConflictDoNothing();
 
@@ -213,7 +248,11 @@ async function seed() {
     ],
   ] as const;
 
-  const mediumQuestionIdBySubject = new Map<SubjectSlug, string>();
+  const questionIdsByDifficulty: Record<1 | 2 | 3, string[]> = {
+    1: [],
+    2: [],
+    3: [],
+  };
 
   for (const [slug, name, area, summary] of subjectData) {
     const [subject] = await getDatabase()
@@ -270,8 +309,10 @@ async function seed() {
         })
         .onConflictDoNothing()
         .returning({ id: questions.id });
-      if (insertedQuestion && bankQuestion.difficulty === 2) {
-        mediumQuestionIdBySubject.set(slug as SubjectSlug, insertedQuestion.id);
+      if (insertedQuestion) {
+        questionIdsByDifficulty[bankQuestion.difficulty].push(
+          insertedQuestion.id,
+        );
       }
     }
 
@@ -526,12 +567,20 @@ async function seed() {
     }
   }
 
-  const practiceQuestionIds = [...mediumQuestionIdBySubject.values()];
-
   const [fuvest] = await getDatabase()
     .select({ id: exams.id })
     .from(exams)
     .where(eq(exams.slug, "fuvest"))
+    .limit(1);
+  const [unicamp] = await getDatabase()
+    .select({ id: exams.id })
+    .from(exams)
+    .where(eq(exams.slug, "unicamp"))
+    .limit(1);
+  const [uerj] = await getDatabase()
+    .select({ id: exams.id })
+    .from(exams)
+    .where(eq(exams.slug, "uerj"))
     .limit(1);
 
   const pastPapers = [
@@ -549,6 +598,7 @@ async function seed() {
             "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos",
           editionLabel: `${year}`,
           year,
+          difficulty: 1 as 1 | 2 | 3,
         }))
       : []),
     ...(fuvest
@@ -563,6 +613,39 @@ async function seed() {
           rulesSourceUrl: "https://www.fuvest.br/acervo",
           editionLabel: `${year}`,
           year,
+          difficulty: 2 as 1 | 2 | 3,
+        }))
+      : []),
+    ...(unicamp
+      ? [2024].map((year) => ({
+          examId: unicamp.id,
+          slug: `unicamp-${year}`,
+          title: `UNICAMP ${year} — 1ª fase`,
+          day: 1,
+          phase: "1ª fase",
+          durationMinutes: 240,
+          officialUrl:
+            "https://www.comvest.unicamp.br/vestibulares-anteriores/",
+          rulesSourceUrl:
+            "https://www.comvest.unicamp.br/vestibulares-anteriores/",
+          editionLabel: `${year}`,
+          year,
+          difficulty: 3 as 1 | 2 | 3,
+        }))
+      : []),
+    ...(uerj
+      ? [2024].map((year) => ({
+          examId: uerj.id,
+          slug: `uerj-${year}`,
+          title: `UERJ ${year} — Exame de qualificação`,
+          day: 1,
+          phase: "Qualificação",
+          durationMinutes: 180,
+          officialUrl: "https://www.cepuerj.uerj.br/",
+          rulesSourceUrl: "https://www.cepuerj.uerj.br/",
+          editionLabel: `${year}`,
+          year,
+          difficulty: 2 as 1 | 2 | 3,
         }))
       : []),
   ];
@@ -597,7 +680,8 @@ async function seed() {
       .onConflictDoNothing()
       .returning({ id: examPapers.id });
     if (!pastPaper) continue;
-    for (const [position, questionId] of practiceQuestionIds.entries()) {
+    const tierQuestionIds = questionIdsByDifficulty[past.difficulty];
+    for (const [position, questionId] of tierQuestionIds.entries()) {
       await getDatabase()
         .insert(examPaperQuestions)
         .values({ paperId: pastPaper.id, questionId, position: position + 1 })

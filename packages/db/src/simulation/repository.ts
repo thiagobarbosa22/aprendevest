@@ -5,19 +5,45 @@ import type {
 import { analyzeSimulation } from "@aprendevest/domain";
 import { and, asc, eq, inArray } from "drizzle-orm";
 import { getDatabase } from "../client";
-import { questions, simulationRuns } from "../schema";
+import {
+  examPaperQuestions,
+  examPapers,
+  examEditions,
+  exams,
+  questions,
+  simulationRuns,
+} from "../schema";
 
 export async function startSimulation(
   userId: string,
   input: SimulationStartInput,
 ) {
   const db = getDatabase();
-  const selected = await db
-    .select({ id: questions.id, version: questions.version })
-    .from(questions)
-    .where(eq(questions.status, "published"))
-    .orderBy(asc(questions.createdAt))
-    .limit(input.questionCount);
+  const selected = input.examSlug
+    ? await db
+        .selectDistinct({ id: questions.id, version: questions.version })
+        .from(questions)
+        .innerJoin(
+          examPaperQuestions,
+          eq(examPaperQuestions.questionId, questions.id),
+        )
+        .innerJoin(examPapers, eq(examPaperQuestions.paperId, examPapers.id))
+        .innerJoin(examEditions, eq(examPapers.editionId, examEditions.id))
+        .innerJoin(exams, eq(examEditions.examId, exams.id))
+        .where(
+          and(
+            eq(questions.status, "published"),
+            eq(exams.slug, input.examSlug),
+          ),
+        )
+        .orderBy(asc(questions.createdAt))
+        .limit(input.questionCount)
+    : await db
+        .select({ id: questions.id, version: questions.version })
+        .from(questions)
+        .where(eq(questions.status, "published"))
+        .orderBy(asc(questions.createdAt))
+        .limit(input.questionCount);
   if (!selected.length)
     throw new Error("Nenhuma questão publicada disponível.");
   const [run] = await db
