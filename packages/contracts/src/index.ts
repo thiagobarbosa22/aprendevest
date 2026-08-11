@@ -36,3 +36,9 @@ export {
   type QuestionAttemptInput,
 } from "./assessment";
 export { examRunUpdateSchema, type ExamRunUpdateInput } from "./exam-paper";
+export {
+  simulationStartSchema,
+  simulationUpdateSchema,
+  type SimulationStartInput,
+  type SimulationUpdateInput,
+} from "./simulation";

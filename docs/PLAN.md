@@ -46,9 +46,11 @@
 - Revisão espaçada com fila persistida, evidências e intervalos ajustados pela lembrança.
 - **Saída demonstrada:** diagnóstico gera plano misto de teoria/prática/revisão; tarefas e revisões persistem e o painel explica os dados usados.
 
-## Fase 7 — Simulados
+## Fase 7 — Simulados (concluída em 2026-08-11)
 
-- Configuração, cronômetro, autosave, correção e análise por tópico.
+- Sessão rápida, personalizada, adaptativa ou de reta final com composição e versões persistidas.
+- Cronômetro acessível, autosave local/servidor, retomada, correção e análise sem promessa de aprovação.
+- **Saída demonstrada:** estudante configura, resolve, finaliza e consulta o histórico de um simulado ponta a ponta.
 
 ## Fase 8 — Qualidade operacional
 

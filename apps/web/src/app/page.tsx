@@ -76,6 +76,7 @@ export default function HomePage() {
             <Link href="/materias">Matérias</Link>
             <Link href="/questoes">Questões</Link>
             <Link href="/provas">Provas anteriores</Link>
+            <Link href="/simulados">Simulados</Link>
           </nav>
         </section>
 

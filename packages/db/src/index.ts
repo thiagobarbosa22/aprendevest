@@ -47,6 +47,12 @@ export {
   listDueReviews,
 } from "./study-plan/repository";
 export {
+  getSimulationQuestions,
+  listSimulationHistory,
+  startSimulation,
+  updateSimulation,
+} from "./simulation/repository";
+export {
   completeProfile,
   createDatabaseSession,
   createStudent,

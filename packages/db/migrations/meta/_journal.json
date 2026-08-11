@@ -43,6 +43,13 @@
       "when": 1786446161014,
       "tag": "0005_dry_blob",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1786446484077,
+      "tag": "0006_bored_reaper",
+      "breakpoints": true
     }
   ]
 }

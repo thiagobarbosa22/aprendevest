@@ -24,6 +24,11 @@ export {
 export { evaluateObjectiveAnswer } from "./assessments/evaluate-answer";
 export { mergeExamRun } from "./assessments/exam-run";
 export {
+  analyzeSimulation,
+  type SimulationAnswer,
+  type SimulationResult,
+} from "./assessments/simulation";
+export {
   buildWeeklyPlan,
   estimateMastery,
   nextReviewDate,

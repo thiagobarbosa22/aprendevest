@@ -53,3 +53,8 @@ Registra tentativa autenticada com chave UUID de idempotência, versão da quest
 
 - `POST` cria ou retoma aplicação de uma prova publicada e devolve sua composição versionada.
 - `PATCH /:runId` mescla respostas e tempo sem regressão; `submit: true` torna a aplicação imutável.
+
+## `/api/v1/simulations`
+
+- `POST` valida modo, quantidade e duração; cria uma composição versionada autenticada.
+- `PATCH /:runId` persiste respostas/tempo e, com `submit: true`, finaliza com análise imutável.

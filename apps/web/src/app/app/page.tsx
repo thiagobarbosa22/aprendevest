@@ -89,6 +89,15 @@ export default async function StudentHomePage() {
               Domínio por tópico e evidências usadas.
             </p>
           </Link>
+          <Link
+            href="/app/simulados"
+            className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
+          >
+            <strong>Simulados</strong>
+            <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+              Cronômetro, autosave, correção e análise.
+            </p>
+          </Link>
         </section>
       )}
     </main>
