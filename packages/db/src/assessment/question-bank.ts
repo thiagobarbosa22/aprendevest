@@ -20,7 +20,9 @@ export const difficultyLabel: Record<1 | 2 | 3, string> = {
  * Platform-authored multiple-choice bank, 1 question per difficulty level
  * per subject — original content, not reproduced from any copyrighted exam.
  */
-export const questionBankBySubject: Record<SubjectSlug, BankQuestion[]> = {
+export const questionBankBySubject: Partial<
+  Record<SubjectSlug, BankQuestion[]>
+> = {
   matematica: [
     {
       slug: "porcentagem-facil",

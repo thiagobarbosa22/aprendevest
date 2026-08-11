@@ -159,4 +159,71 @@ export const demoSubjects = [
     area: "natural_sciences" as const,
     summary: "Mecânica, termologia, eletricidade, óptica e ondulatória.",
   },
+  {
+    id: "demo-literatura",
+    slug: "literatura",
+    name: "Literatura",
+    area: "languages" as const,
+    summary:
+      "Escolas literárias, movimentos e análise de obras da literatura brasileira e portuguesa.",
+  },
+  {
+    id: "demo-redacao",
+    slug: "redacao",
+    name: "Redação",
+    area: "languages" as const,
+    summary:
+      "Estrutura dissertativo-argumentativa, repertório sociocultural e proposta de intervenção.",
+  },
+  {
+    id: "demo-geografia",
+    slug: "geografia",
+    name: "Geografia",
+    area: "human_sciences" as const,
+    summary: "Geografia física, humana, geopolítica e geografia do Brasil.",
+  },
+  {
+    id: "demo-filosofia",
+    slug: "filosofia",
+    name: "Filosofia",
+    area: "human_sciences" as const,
+    summary: "Filosofia antiga, moderna, contemporânea, ética e política.",
+  },
+  {
+    id: "demo-sociologia",
+    slug: "sociologia",
+    name: "Sociologia",
+    area: "human_sciences" as const,
+    summary:
+      "Clássicos da sociologia, cultura, estratificação e movimentos sociais.",
+  },
+  {
+    id: "demo-ingles",
+    slug: "ingles",
+    name: "Inglês",
+    area: "languages" as const,
+    summary:
+      "Interpretação de texto, gramática e estratégias de leitura em inglês.",
+  },
+  {
+    id: "demo-espanhol",
+    slug: "espanhol",
+    name: "Espanhol",
+    area: "languages" as const,
+    summary: "Interpretação de texto, gramática e cultura hispano-americana.",
+  },
+  {
+    id: "demo-artes",
+    slug: "artes",
+    name: "Artes",
+    area: "languages" as const,
+    summary: "História da arte, arte brasileira e movimentos artísticos.",
+  },
+  {
+    id: "demo-educacao-fisica",
+    slug: "educacao-fisica",
+    name: "Educação Física",
+    area: "languages" as const,
+    summary: "Cultura corporal, esporte, saúde e qualidade de vida.",
+  },
 ];

@@ -9,6 +9,15 @@ const subjectNames: Record<SubjectSlug, string> = {
   historia: "História",
   quimica: "Química",
   fisica: "Física",
+  literatura: "Literatura",
+  redacao: "Redação",
+  geografia: "Geografia",
+  filosofia: "Filosofia",
+  sociologia: "Sociologia",
+  ingles: "Inglês",
+  espanhol: "Espanhol",
+  artes: "Artes",
+  "educacao-fisica": "Educação Física",
 };
 
 const demoVideoLessons = Object.entries(lessonVideosBySubject).flatMap(

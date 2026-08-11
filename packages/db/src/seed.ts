@@ -304,6 +304,60 @@ async function seed() {
       "natural_sciences",
       "Mecânica, termologia, eletricidade, óptica e ondulatória.",
     ],
+    [
+      "literatura",
+      "Literatura",
+      "languages",
+      "Escolas literárias, movimentos e análise de obras da literatura brasileira e portuguesa.",
+    ],
+    [
+      "redacao",
+      "Redação",
+      "languages",
+      "Estrutura dissertativo-argumentativa, repertório sociocultural e proposta de intervenção.",
+    ],
+    [
+      "geografia",
+      "Geografia",
+      "human_sciences",
+      "Geografia física, humana, geopolítica e geografia do Brasil.",
+    ],
+    [
+      "filosofia",
+      "Filosofia",
+      "human_sciences",
+      "Filosofia antiga, moderna, contemporânea, ética e política.",
+    ],
+    [
+      "sociologia",
+      "Sociologia",
+      "human_sciences",
+      "Clássicos da sociologia, cultura, estratificação e movimentos sociais.",
+    ],
+    [
+      "ingles",
+      "Inglês",
+      "languages",
+      "Interpretação de texto, gramática e estratégias de leitura em inglês.",
+    ],
+    [
+      "espanhol",
+      "Espanhol",
+      "languages",
+      "Interpretação de texto, gramática e cultura hispano-americana.",
+    ],
+    [
+      "artes",
+      "Artes",
+      "languages",
+      "História da arte, arte brasileira e movimentos artísticos.",
+    ],
+    [
+      "educacao-fisica",
+      "Educação Física",
+      "languages",
+      "Cultura corporal, esporte, saúde e qualidade de vida.",
+    ],
   ] as const;
 
   const questionIdsByDifficulty: Record<1 | 2 | 3, string[]> = {
