@@ -50,6 +50,10 @@ export async function listPublishedLessons(subjectSlug?: string) {
       rightsStatus: contentItems.rightsStatus,
       version: contentItems.version,
       mediaUrl: contentItems.mediaUrl,
+      level: contentItems.level,
+      pedagogicalType: contentItems.pedagogicalType,
+      examTags: contentItems.examTags,
+      prerequisiteSummary: contentItems.prerequisiteSummary,
     })
     .from(contentItems)
     .innerJoin(topics, eq(contentItems.topicId, topics.id))

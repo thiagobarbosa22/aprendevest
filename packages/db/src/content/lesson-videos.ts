@@ -16,6 +16,8 @@ export type LessonVideo = {
   channel: string;
   videoUrl: string;
   estimatedMinutes: number;
+  /** Short "o que você precisa saber antes" line — omit when there's none. */
+  prerequisiteSummary?: string;
 };
 
 /**
@@ -34,6 +36,7 @@ export const lessonVideosBySubject: Record<SubjectSlug, LessonVideo[]> = {
       channel: "Professor Ferretto | ENEM e Vestibulares",
       videoUrl: "https://www.youtube.com/watch?v=SPZqQ5qn3P0",
       estimatedMinutes: 20,
+      prerequisiteSummary: "Operações básicas e plano cartesiano",
     },
     {
       slug: "geometria-plana",
@@ -76,6 +79,7 @@ export const lessonVideosBySubject: Record<SubjectSlug, LessonVideo[]> = {
       channel: "Fique Tranquilo - Matemática com prof. Bruno",
       videoUrl: "https://www.youtube.com/watch?v=xkMKPDqPEjE",
       estimatedMinutes: 20,
+      prerequisiteSummary: "Semelhança de triângulos e Teorema de Pitágoras",
     },
   ],
   "lingua-portuguesa": [
@@ -131,6 +135,7 @@ export const lessonVideosBySubject: Record<SubjectSlug, LessonVideo[]> = {
       channel: "Profinho",
       videoUrl: "https://www.youtube.com/watch?v=Y86ZJPVhmZo",
       estimatedMinutes: 25,
+      prerequisiteSummary: "Interpretação de texto e leitura de propostas",
     },
   ],
   biologia: [
@@ -153,6 +158,7 @@ export const lessonVideosBySubject: Record<SubjectSlug, LessonVideo[]> = {
       channel: "Curso Enem Gratuito",
       videoUrl: "https://www.youtube.com/watch?v=JsLH-x_tSZ0",
       estimatedMinutes: 20,
+      prerequisiteSummary: "Núcleo celular e DNA (citologia básica)",
     },
     {
       slug: "ecologia",
@@ -206,6 +212,7 @@ export const lessonVideosBySubject: Record<SubjectSlug, LessonVideo[]> = {
       channel: "Curso Enem Gratuito",
       videoUrl: "https://www.youtube.com/watch?v=pqEDSyU6tsw",
       estimatedMinutes: 20,
+      prerequisiteSummary: "Contexto da Primeira República (1889-1930)",
     },
     {
       slug: "guerra-fria",
@@ -261,6 +268,7 @@ export const lessonVideosBySubject: Record<SubjectSlug, LessonVideo[]> = {
       channel: "Curso Enem Gratuito",
       videoUrl: "https://www.youtube.com/watch?v=vodua1lGa68",
       estimatedMinutes: 20,
+      prerequisiteSummary: "Mol e balanceamento de equações",
     },
     {
       slug: "quimica-inorganica-e-ligacoes",
@@ -292,6 +300,7 @@ export const lessonVideosBySubject: Record<SubjectSlug, LessonVideo[]> = {
       channel: "Stoodi",
       videoUrl: "https://www.youtube.com/watch?v=nTkxw0797eE",
       estimatedMinutes: 15,
+      prerequisiteSummary: "Número de oxidação (Nox) e balanceamento redox",
     },
   ],
   fisica: [
@@ -316,6 +325,7 @@ export const lessonVideosBySubject: Record<SubjectSlug, LessonVideo[]> = {
       channel: "Professor Boaro",
       videoUrl: "https://www.youtube.com/watch?v=6yIdTlAFhZY",
       estimatedMinutes: 30,
+      prerequisiteSummary: "Grandezas físicas básicas e Leis de Newton",
     },
     {
       slug: "termologia",
@@ -337,6 +347,7 @@ export const lessonVideosBySubject: Record<SubjectSlug, LessonVideo[]> = {
       channel: "Curso Enem Gratuito",
       videoUrl: "https://www.youtube.com/watch?v=B4LQMZluelI",
       estimatedMinutes: 20,
+      prerequisiteSummary: "Propagação retilínea da luz",
     },
     {
       slug: "ondulatoria",

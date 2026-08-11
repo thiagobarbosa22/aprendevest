@@ -36,6 +36,13 @@ const demoVideoLessons = Object.entries(lessonVideosBySubject).flatMap(
       rightsStatus: "official_link" as const,
       version: 1,
       mediaUrl: subtopic.videoUrl as string | null,
+      level: "basico" as const,
+      pedagogicalType: (subtopic.videoTitle.toLowerCase().includes("resumo")
+        ? "revisao"
+        : "teoria") as "teoria" | "revisao",
+      examTags: ["ENEM"] as string[],
+      prerequisiteSummary: (subtopic.prerequisiteSummary ?? null) as
+        string | null,
     })),
 );
 
@@ -86,6 +93,10 @@ export const demoLessons = [
     rightsStatus: "platform_authored" as const,
     version: 1,
     mediaUrl: null as string | null,
+    level: "basico" as const,
+    pedagogicalType: "teoria" as "teoria" | "revisao",
+    examTags: ["ENEM"] as string[],
+    prerequisiteSummary: null as string | null,
   },
   ...demoVideoLessons,
 ];

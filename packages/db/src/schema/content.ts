@@ -32,6 +32,18 @@ export const progressStatus = pgEnum("progress_status", [
   "completed",
 ]);
 
+export const contentLevel = pgEnum("content_level", [
+  "basico",
+  "intermediario",
+  "avancado",
+]);
+
+export const pedagogicalType = pgEnum("pedagogical_type", [
+  "teoria",
+  "exercicios",
+  "revisao",
+]);
+
 export const curriculumModules = pgTable(
   "curriculum_modules",
   {
@@ -77,6 +89,12 @@ export const contentItems = pgTable(
     body: jsonb("body").$type<ContentBlock[]>().default([]).notNull(),
     objectives: jsonb("objectives").$type<string[]>().default([]).notNull(),
     estimatedMinutes: integer("estimated_minutes").notNull(),
+    level: contentLevel("level").default("basico").notNull(),
+    pedagogicalType: pedagogicalType("pedagogical_type")
+      .default("teoria")
+      .notNull(),
+    examTags: jsonb("exam_tags").$type<string[]>().default([]).notNull(),
+    prerequisiteSummary: text("prerequisite_summary"),
     mediaUrl: text("media_url"),
     transcript: text("transcript"),
     chapters: jsonb("chapters")

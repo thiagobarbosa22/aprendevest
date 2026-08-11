@@ -6,3 +6,4 @@ export * from "./study-plan";
 export * from "./simulation";
 export * from "./expansion";
 export * from "./identity";
+export * from "./literary-works";

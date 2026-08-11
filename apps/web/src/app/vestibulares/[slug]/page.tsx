@@ -1,4 +1,4 @@
-import { getPublishedExam } from "@aprendevest/db";
+import { getPublishedExam, listLiteraryWorks } from "@aprendevest/db";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -12,6 +12,9 @@ export default async function ExamPage({
   const { slug } = await params;
   const exam = await getPublishedExam(slug);
   if (!exam) notFound();
+  const literaryWorks = (await listLiteraryWorks()).filter(
+    (work) => work.examSlug === exam.slug,
+  );
   return (
     <main id="conteudo-principal" className="mx-auto max-w-4xl px-6 py-12">
       <Link
@@ -74,6 +77,43 @@ export default async function ExamPage({
           ) : null}
         </div>
       </aside>
+      {literaryWorks.length ? (
+        <section className="mt-8 rounded-xl border border-[var(--color-border)] p-6">
+          <h2 className="font-semibold">
+            Obras literárias obrigatórias · {literaryWorks[0]?.editionYear}
+          </h2>
+          <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+            Lista divulgada pela própria instituição — muda a cada edição,
+            confira sempre a fonte oficial antes de estudar.
+          </p>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+            {literaryWorks.map((work) => (
+              <li
+                key={work.id}
+                className="rounded-lg bg-[var(--color-surface-muted)] p-4"
+              >
+                <strong className="block">{work.title}</strong>
+                <p className="text-sm text-[var(--color-text-muted)]">
+                  {work.author}
+                </p>
+                {work.notes ? (
+                  <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+                    {work.notes}
+                  </p>
+                ) : null}
+                <a
+                  href={work.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-2 inline-block text-xs font-semibold underline"
+                >
+                  Fonte oficial
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </main>
   );
 }

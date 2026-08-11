@@ -13,6 +13,18 @@ import { LessonProgress } from "../../_components/lesson-progress";
 
 export const dynamic = "force-dynamic";
 
+const levelLabel: Record<string, string> = {
+  basico: "Básico",
+  intermediario: "Intermediário",
+  avancado: "Avançado",
+};
+
+const pedagogicalTypeLabel: Record<string, string> = {
+  teoria: "Teoria",
+  exercicios: "Exercícios",
+  revisao: "Revisão",
+};
+
 export default async function LessonPage({
   params,
 }: {
@@ -44,6 +56,28 @@ export default async function LessonPage({
           <p className="mt-4 text-lg text-[var(--color-text-muted)]">
             {lesson.summary}
           </p>
+          <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold">
+            <span className="rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-[var(--color-primary)]">
+              {levelLabel[lesson.level] ?? lesson.level}
+            </span>
+            <span className="rounded-full bg-[var(--color-secondary)]/10 px-3 py-1 text-[var(--color-secondary)]">
+              {pedagogicalTypeLabel[lesson.pedagogicalType] ??
+                lesson.pedagogicalType}
+            </span>
+            {lesson.examTags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-[var(--color-accent)]/10 px-3 py-1 text-[var(--color-accent)]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          {lesson.prerequisiteSummary ? (
+            <p className="mt-3 text-sm text-[var(--color-text-muted)]">
+              <strong>Pré-requisito:</strong> {lesson.prerequisiteSummary}
+            </p>
+          ) : null}
           {lesson.mediaUrl && toYoutubeEmbedUrl(lesson.mediaUrl) ? (
             <div className="mt-8 aspect-video overflow-hidden rounded-xl bg-black">
               <iframe

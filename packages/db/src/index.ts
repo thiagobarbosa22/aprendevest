@@ -76,3 +76,4 @@ export {
 } from "./identity/repository";
 export * as schema from "./schema";
 export { databaseHealth } from "./system/database-health";
+export { listLiteraryWorks } from "./literary-works/repository";

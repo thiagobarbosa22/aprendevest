@@ -13,6 +13,7 @@ import {
   examPapers,
   essayThemes,
   featureFlags,
+  literaryWorks,
   profiles,
   questions,
   subjects,
@@ -24,6 +25,10 @@ import {
   type SubjectSlug,
 } from "./content/lesson-videos";
 import { questionBankBySubject } from "./assessment/question-bank";
+import {
+  literaryWorksByExam,
+  type ExamSlugWithReadingList,
+} from "./literary-works/data";
 
 function checksumFor(input: string): string {
   return createHash("sha256").update(input).digest("hex");
@@ -199,6 +204,59 @@ async function seed() {
         sourceUrl: "https://www.cepuerj.uerj.br/",
         summary:
           "Processo seletivo da UERJ com exame de qualificação e discursiva-objetiva.",
+        rightsStatus: "official_link",
+        status: "published",
+        authorId: editorId,
+        reviewerId,
+        verifiedAt: now,
+        publishedAt: now,
+      },
+      {
+        slug: "unesp",
+        name: "Vestibular da Universidade Estadual Paulista",
+        acronym: "UNESP",
+        institution: "Universidade Estadual Paulista",
+        board: "VUNESP",
+        region: "São Paulo",
+        officialUrl: "https://www.vunesp.com.br/",
+        sourceUrl: "https://www.vunesp.com.br/",
+        summary:
+          "Processo seletivo da Unesp aplicado pela Vunesp, sem lista de leituras obrigatórias.",
+        rightsStatus: "official_link",
+        status: "published",
+        authorId: editorId,
+        reviewerId,
+        verifiedAt: now,
+        publishedAt: now,
+      },
+      {
+        slug: "ufpr",
+        name: "Vestibular da Universidade Federal do Paraná",
+        acronym: "UFPR",
+        institution: "Universidade Federal do Paraná",
+        board: "NC-UFPR",
+        region: "Paraná",
+        officialUrl: "https://www.nc.ufpr.br/",
+        sourceUrl: "https://www.nc.ufpr.br/",
+        summary:
+          "Processo seletivo da UFPR conduzido pelo Núcleo de Concursos.",
+        rightsStatus: "official_link",
+        status: "published",
+        authorId: editorId,
+        reviewerId,
+        verifiedAt: now,
+        publishedAt: now,
+      },
+      {
+        slug: "ufrgs",
+        name: "Vestibular da Universidade Federal do Rio Grande do Sul",
+        acronym: "UFRGS",
+        institution: "Universidade Federal do Rio Grande do Sul",
+        board: "COPERSE",
+        region: "Rio Grande do Sul",
+        officialUrl: "https://www.ufrgs.br/coperse/",
+        sourceUrl: "https://www.ufrgs.br/coperse/",
+        summary: "Processo seletivo da UFRGS conduzido pela COPERSE.",
         rightsStatus: "official_link",
         status: "published",
         authorId: editorId,
@@ -402,6 +460,12 @@ async function seed() {
           ],
           objectives: [`Revisar os principais conceitos de ${subtopic.name}`],
           estimatedMinutes: subtopic.estimatedMinutes,
+          level: "basico",
+          pedagogicalType: subtopic.videoTitle.toLowerCase().includes("resumo")
+            ? "revisao"
+            : "teoria",
+          examTags: ["ENEM"],
+          prerequisiteSummary: subtopic.prerequisiteSummary ?? null,
           mediaUrl: subtopic.videoUrl,
           accessibleText: `Videoaula "${subtopic.videoTitle}", do canal ${subtopic.channel}, sobre ${subtopic.name}.`,
           sourceUrl: subtopic.videoUrl,
@@ -414,7 +478,17 @@ async function seed() {
         })
         .onConflictDoUpdate({
           target: contentItems.slug,
-          set: { updatedAt: now },
+          set: {
+            level: "basico",
+            pedagogicalType: subtopic.videoTitle
+              .toLowerCase()
+              .includes("resumo")
+              ? "revisao"
+              : "teoria",
+            examTags: ["ENEM"],
+            prerequisiteSummary: subtopic.prerequisiteSummary ?? null,
+            updatedAt: now,
+          },
         });
     }
   }
@@ -728,6 +802,44 @@ async function seed() {
         .insert(examPaperQuestions)
         .values({ paperId: pastPaper.id, questionId, position: position + 1 })
         .onConflictDoNothing();
+    }
+  }
+
+  for (const [examSlug, edition] of Object.entries(literaryWorksByExam) as [
+    ExamSlugWithReadingList,
+    (typeof literaryWorksByExam)[ExamSlugWithReadingList],
+  ][]) {
+    const [readingListExam] = await getDatabase()
+      .select({ id: exams.id })
+      .from(exams)
+      .where(eq(exams.slug, examSlug))
+      .limit(1);
+    if (!readingListExam) continue;
+    for (const work of edition.works) {
+      await getDatabase()
+        .insert(literaryWorks)
+        .values({
+          examId: readingListExam.id,
+          editionYear: edition.editionYear,
+          title: work.title,
+          author: work.author,
+          sourceUrl: work.sourceUrl,
+          notes: work.notes ?? null,
+          status: "published",
+        })
+        .onConflictDoUpdate({
+          target: [
+            literaryWorks.examId,
+            literaryWorks.editionYear,
+            literaryWorks.title,
+          ],
+          set: {
+            author: work.author,
+            sourceUrl: work.sourceUrl,
+            notes: work.notes ?? null,
+            updatedAt: now,
+          },
+        });
     }
   }
 
