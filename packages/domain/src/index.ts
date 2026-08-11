@@ -17,3 +17,7 @@ export {
   editorialStatuses,
   type EditorialStatus,
 } from "./editorial/workflow";
+export {
+  mergeContentProgress,
+  type ContentProgressState,
+} from "./progress/content-progress";

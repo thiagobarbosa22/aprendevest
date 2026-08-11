@@ -11,6 +11,19 @@ export {
   transitionExamStatus,
 } from "./catalog/repository";
 export {
+  addContentNote,
+  createLessonDraft,
+  getContentProgress,
+  getPublishedLesson,
+  listContentNotes,
+  listContentEditorOptions,
+  listEditorialContent,
+  listPublishedLessons,
+  publishContent,
+  saveContentProgress,
+  transitionContentStatus,
+} from "./content/repository";
+export {
   completeProfile,
   createDatabaseSession,
   createStudent,

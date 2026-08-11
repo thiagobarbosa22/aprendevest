@@ -34,3 +34,13 @@ Resposta `503` quando o banco está ausente ou indisponível. O corpo mantém o 
 Exige sessão válida e retorna, como anexo JSON sem cache, os dados de conta, perfil e histórico de consentimentos do titular. Nunca inclui senha ou tokens.
 
 O catálogo público é servido por Server Components sobre o mesmo repositório usado pelo CMS. Mutações editoriais usam Server Actions com schemas compartilhados, RBAC, concorrência otimista e auditoria.
+
+## `/api/v1/progress/content/:contentId`
+
+- `GET` retorna o progresso do titular autenticado e nunca usa cache compartilhado.
+- `PUT` recebe `{ percent, positionSeconds, complete }`, valida limites e preserva o maior avanço já sincronizado.
+
+## `/api/v1/progress/content/:contentId/notes`
+
+- `GET` lista somente anotações do titular.
+- `POST` cria anotação de até 4.000 caracteres, opcionalmente associada a um timestamp.

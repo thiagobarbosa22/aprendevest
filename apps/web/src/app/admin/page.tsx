@@ -22,12 +22,15 @@ export default async function AdminPage() {
             Vestibulares, matérias, tópicos e versões.
           </p>
         </Link>
-        <div className="rounded-xl border border-[var(--color-border)] p-6">
+        <Link
+          href="/admin/conteudos"
+          className="rounded-xl border border-[var(--color-border)] p-6"
+        >
           <strong>Conteúdo</strong>
           <p className="mt-2 text-sm text-[var(--color-text-muted)]">
-            Disponível na Fase 3.
+            Aulas, versões e publicação.
           </p>
-        </div>
+        </Link>
       </div>
     </main>
   );

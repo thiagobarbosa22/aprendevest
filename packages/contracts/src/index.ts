@@ -20,3 +20,13 @@ export {
   type ExamDraftInput,
   type SubjectDraftInput,
 } from "./catalog";
+export {
+  contentBlockSchema,
+  contentNoteSchema,
+  contentProgressSchema,
+  lessonDraftSchema,
+  type ContentBlock,
+  type ContentNoteInput,
+  type ContentProgressInput,
+  type LessonDraftInput,
+} from "./content";

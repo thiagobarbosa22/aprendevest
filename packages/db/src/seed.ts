@@ -3,7 +3,16 @@ import { config } from "dotenv";
 import { and, eq, sql } from "drizzle-orm";
 
 import { getDatabase } from "./client";
-import { consents, exams, profiles, subjects, topics, users } from "./schema";
+import {
+  consents,
+  contentItems,
+  curriculumModules,
+  exams,
+  profiles,
+  subjects,
+  topics,
+  users,
+} from "./schema";
 
 config({ path: "../../.env", quiet: true });
 
@@ -208,6 +217,101 @@ async function seed() {
         });
     }
   }
+
+  const [mathSubject] = await getDatabase()
+    .select({ id: subjects.id })
+    .from(subjects)
+    .where(eq(subjects.slug, "matematica"))
+    .limit(1);
+  if (!mathSubject)
+    throw new Error("Matéria de Matemática não encontrada no seed.");
+  const [mathTopic] = await getDatabase()
+    .select({ id: topics.id })
+    .from(topics)
+    .where(
+      and(eq(topics.subjectId, mathSubject.id), eq(topics.slug, "fundamentos")),
+    )
+    .limit(1);
+  if (!mathTopic)
+    throw new Error("Tópico de Matemática não encontrado no seed.");
+
+  const [createdModule] = await getDatabase()
+    .insert(curriculumModules)
+    .values({
+      subjectId: mathSubject.id,
+      slug: "funcoes",
+      title: "Funções",
+      summary: "Representações, propriedades e aplicações de funções.",
+      objectives: [
+        "Reconhecer relações funcionais",
+        "Interpretar tabelas e gráficos",
+      ],
+      status: "published",
+    })
+    .onConflictDoNothing()
+    .returning({ id: curriculumModules.id });
+  const moduleRow =
+    createdModule ??
+    (
+      await getDatabase()
+        .select({ id: curriculumModules.id })
+        .from(curriculumModules)
+        .where(
+          and(
+            eq(curriculumModules.subjectId, mathSubject.id),
+            eq(curriculumModules.slug, "funcoes"),
+          ),
+        )
+        .limit(1)
+    )[0];
+  if (!moduleRow) throw new Error("Módulo de Funções não encontrado no seed.");
+
+  await getDatabase()
+    .insert(contentItems)
+    .values({
+      moduleId: moduleRow.id,
+      topicId: mathTopic.id,
+      slug: "funcoes-primeiros-passos",
+      type: "lesson",
+      title: "Funções: primeiros passos",
+      summary:
+        "Entenda relação, domínio, imagem e como reconhecer uma função em tabelas e gráficos.",
+      body: [
+        { type: "heading", text: "O que é uma função?" },
+        {
+          type: "paragraph",
+          text: "Uma função associa cada elemento do domínio a exatamente um elemento do contradomínio.",
+        },
+        {
+          type: "example",
+          title: "Temperatura ao longo do dia",
+          text: "Se cada horário possui uma única temperatura medida, a relação horário → temperatura é uma função.",
+        },
+        {
+          type: "check",
+          question:
+            "Uma entrada pode ter duas saídas diferentes em uma função?",
+          answer: "Não. Cada entrada deve estar associada a uma única saída.",
+        },
+      ],
+      objectives: [
+        "Reconhecer uma função",
+        "Identificar domínio e imagem",
+        "Interpretar representações simples",
+      ],
+      estimatedMinutes: 25,
+      accessibleText:
+        "Funções associam cada entrada a uma única saída. Domínio é o conjunto de entradas; imagem reúne as saídas obtidas.",
+      sourceUrl:
+        "https://curriculo.sedu.es.gov.br/curriculo/wp-content/uploads/2020/02/BNCC_EnsinoMedio_embaixa_site_110518.pdf",
+      rightsStatus: "platform_authored",
+      status: "published",
+      authorId: editorId,
+      reviewerId,
+      verifiedAt: now,
+      publishedAt: now,
+    })
+    .onConflictDoNothing();
 }
 
 seed()

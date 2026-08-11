@@ -15,6 +15,13 @@
       "when": 1786420524604,
       "tag": "0001_dapper_toad",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1786421241010,
+      "tag": "0002_magenta_nicolaos",
+      "breakpoints": true
     }
   ]
 }

@@ -53,12 +53,15 @@ export default async function StudentHomePage() {
               Objetivos, dados e consentimentos.
             </p>
           </Link>
-          <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-            <strong>Plano de estudos</strong>
+          <Link
+            href="/aulas/funcoes-primeiros-passos"
+            className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
+          >
+            <strong>Continuar aula</strong>
             <p className="mt-2 text-sm text-[var(--color-text-muted)]">
-              Chega na Fase 6.
+              Funções: primeiros passos.
             </p>
-          </div>
+          </Link>
           <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
             <strong>Prática</strong>
             <p className="mt-2 text-sm text-[var(--color-text-muted)]">

@@ -21,10 +21,12 @@
 - Seed sintético cria catálogo e papéis editor/revisor sem reproduzir material protegido.
 - **Saída demonstrada:** editor publica um vestibular rastreável sem editar código; páginas públicas leem o repositório e têm fallback demonstrativo sem banco.
 
-## Fase 3 — Conteúdo e progresso
+## Fase 3 — Conteúdo e progresso (concluída em 2026-08-11)
 
-- Aula multimodal, retomada, anotações, resumo e mapa mental acessível.
-- **Saída:** estudante conclui e retoma um módulo em outro dispositivo.
+- Módulos, aulas estruturadas, objetivos, fonte/direitos, texto acessível, notas e retomada.
+- CMS de conteúdo segue o mesmo workflow versionado do catálogo.
+- API autenticada persiste avanço monotônico, posição, conclusão e anotações por usuário.
+- **Saída demonstrada:** estudante conclui e retoma uma aula em outro dispositivo; contratos, regra de progresso e handler autenticado têm testes.
 
 ## Fases 4–7 — Prática completa
 

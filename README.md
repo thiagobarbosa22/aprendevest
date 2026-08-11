@@ -4,7 +4,7 @@ Plataforma web de preparação para vestibulares, construída em fases a partir 
 
 ## Estado atual
 
-As Fases 0–2 estabelecem o monorepo, aplicação Next.js, PostgreSQL/Drizzle, identidade, controles LGPD e catálogo administrável por CMS. Aulas e jornadas acadêmicas são adicionadas em incrementos completos e testáveis.
+As Fases 0–3 estabelecem identidade, controles LGPD, catálogo/CMS, aulas estruturadas, acessibilidade textual, anotações e progresso sincronizado. Prática e planejamento são adicionados nos próximos incrementos.
 
 ## Início rápido
 
