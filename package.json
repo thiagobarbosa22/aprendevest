@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "corepack pnpm --filter @aprendevest/web build",
-    "check": "corepack pnpm lint && corepack pnpm typecheck && corepack pnpm test && corepack pnpm build",
+    "check": "corepack pnpm format:check && corepack pnpm lint && corepack pnpm typecheck && corepack pnpm test && corepack pnpm build",
     "db:generate": "corepack pnpm --filter @aprendevest/db db:generate",
     "db:migrate": "corepack pnpm --filter @aprendevest/db db:migrate",
     "dev": "corepack pnpm --filter @aprendevest/web dev",

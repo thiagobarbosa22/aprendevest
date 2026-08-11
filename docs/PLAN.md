@@ -5,7 +5,7 @@
 - Monorepo, Next.js/TypeScript, Tailwind, contratos, limites de domínio e PostgreSQL.
 - Endpoint de diagnóstico, documentação, lint, tipos, testes e build.
 - Design tokens e shell acessível em colaboração com o Claude.
-- **Saída demonstrada:** instalação reproduzível, lint/tipos/testes/build verdes, endpoint de diagnóstico e preview navegável.
+- **Saída demonstrada:** instalação reproduzível, CI versionado, formatação/lint/tipos/testes/build verdes, endpoint de diagnóstico e preview navegável.
 
 ## Fase 1 — Identidade
 

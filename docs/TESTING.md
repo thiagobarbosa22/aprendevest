@@ -11,7 +11,7 @@ corepack pnpm test
 corepack pnpm build
 ```
 
-O gate só está verde quando todos os comandos terminam com código `0`. `corepack pnpm check` executa a sequência completa.
+O gate só está verde quando todos os comandos terminam com código `0`. `corepack pnpm check` também valida a formatação e executa a sequência completa. O workflow `.github/workflows/ci.yml` repete esse gate em cada pull request e push para `main`, com instalação congelada pelo lockfile.
 
 ## Cobertura atual
 
