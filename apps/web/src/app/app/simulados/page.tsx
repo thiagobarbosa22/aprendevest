@@ -1,8 +1,10 @@
 import {
+  enemYears,
   listExamsWithPracticeQuestions,
   listSimulationHistory,
 } from "@aprendevest/db";
 import Link from "next/link";
+import { EnemSimulationRunner } from "../../_components/enem-simulation-runner";
 import { SimulationRunner } from "../../_components/simulation-runner";
 import { requireUser } from "../../../lib/auth/guards";
 
@@ -20,8 +22,13 @@ export default async function SimulationsPage() {
       </Link>
       <h1 className="mt-4 text-3xl font-bold">Simulados</h1>
       <p className="mt-2 text-[var(--color-text-muted)]">
-        Escolha um vestibular e receba análise imediata com base em provas
-        anteriores do ENEM, FUVEST e outras instituições.
+        Prova completa do ENEM com questões oficiais, ou prática rápida filtrada
+        por vestibular.
+      </p>
+      <EnemSimulationRunner years={enemYears} />
+      <h2 className="mt-12 text-xl font-semibold">Prática rápida</h2>
+      <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+        Sessões menores, com questões autorais de prática por vestibular.
       </p>
       <SimulationRunner exams={exams} />
       {history.length ? (

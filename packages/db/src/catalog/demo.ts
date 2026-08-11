@@ -111,6 +111,38 @@ export const demoExams = [
     version: 1,
     verifiedAt: new Date("2026-08-01T00:00:00.000Z"),
   },
+  {
+    id: "demo-ita",
+    slug: "ita",
+    name: "Vestibular do Instituto Tecnológico de Aeronáutica",
+    acronym: "ITA",
+    institution: "Instituto Tecnológico de Aeronáutica",
+    board: "ITA",
+    region: "São Paulo",
+    officialUrl: "https://vestibular.ita.br/",
+    sourceUrl: "https://vestibular.ita.br/",
+    summary:
+      "Vestibular militar de alta exigência em Matemática, Física, Química, Português e Inglês.",
+    rightsStatus: "official_link" as const,
+    version: 1,
+    verifiedAt: new Date("2026-08-01T00:00:00.000Z"),
+  },
+  {
+    id: "demo-ime",
+    slug: "ime",
+    name: "Vestibular do Instituto Militar de Engenharia",
+    acronym: "IME",
+    institution: "Instituto Militar de Engenharia",
+    board: "IME",
+    region: "Rio de Janeiro",
+    officialUrl: "https://www.ime.eb.mil.br/",
+    sourceUrl: "https://www.ime.eb.mil.br/",
+    summary:
+      "Vestibular militar com provas discursivas de Matemática, Física, Química, Português e Inglês.",
+    rightsStatus: "official_link" as const,
+    version: 1,
+    verifiedAt: new Date("2026-08-01T00:00:00.000Z"),
+  },
 ];
 
 export const demoSubjects = [

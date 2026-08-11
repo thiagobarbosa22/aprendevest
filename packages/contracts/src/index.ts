@@ -43,3 +43,10 @@ export {
   type SimulationUpdateInput,
 } from "./simulation";
 export { essayDraftSchema, type EssayDraftInput } from "./essay";
+export {
+  enemDisciplines,
+  enemSimulationStartSchema,
+  enemSimulationUpdateSchema,
+  type EnemSimulationStartInput,
+  type EnemSimulationUpdateInput,
+} from "./enem-simulation";

@@ -264,6 +264,42 @@ async function seed() {
         verifiedAt: now,
         publishedAt: now,
       },
+      {
+        slug: "ita",
+        name: "Vestibular do Instituto Tecnológico de Aeronáutica",
+        acronym: "ITA",
+        institution: "Instituto Tecnológico de Aeronáutica",
+        board: "ITA",
+        region: "São Paulo",
+        officialUrl: "https://vestibular.ita.br/",
+        sourceUrl: "https://vestibular.ita.br/",
+        summary:
+          "Vestibular militar de alta exigência em Matemática, Física, Química, Português e Inglês.",
+        rightsStatus: "official_link",
+        status: "published",
+        authorId: editorId,
+        reviewerId,
+        verifiedAt: now,
+        publishedAt: now,
+      },
+      {
+        slug: "ime",
+        name: "Vestibular do Instituto Militar de Engenharia",
+        acronym: "IME",
+        institution: "Instituto Militar de Engenharia",
+        board: "IME",
+        region: "Rio de Janeiro",
+        officialUrl: "https://www.ime.eb.mil.br/",
+        sourceUrl: "https://www.ime.eb.mil.br/",
+        summary:
+          "Vestibular militar com provas discursivas de Matemática, Física, Química, Português e Inglês.",
+        rightsStatus: "official_link",
+        status: "published",
+        authorId: editorId,
+        reviewerId,
+        verifiedAt: now,
+        publishedAt: now,
+      },
     ])
     .onConflictDoNothing();
 

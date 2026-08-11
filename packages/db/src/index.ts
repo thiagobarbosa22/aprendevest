@@ -78,3 +78,11 @@ export {
 export * as schema from "./schema";
 export { databaseHealth } from "./system/database-health";
 export { listLiteraryWorks } from "./literary-works/repository";
+export {
+  enemDisciplineLabel,
+  enemYears,
+  getEnemSimulationQuestions,
+  listEnemSimulationHistory,
+  startEnemSimulation,
+  updateEnemSimulation,
+} from "./enem-simulation/repository";
