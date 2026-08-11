@@ -28,7 +28,13 @@
 - API autenticada persiste avanço monotônico, posição, conclusão e anotações por usuário.
 - **Saída demonstrada:** estudante conclui e retoma uma aula em outro dispositivo; contratos, regra de progresso e handler autenticado têm testes.
 
-## Fases 4–7 — Prática completa
+## Fase 4 — Questões (concluída em 2026-08-11)
+
+- Questões classificadas, tentativas idempotentes, correção objetiva e resolução passo a passo.
+- Erros entram automaticamente no caderno e são resolvidos por acerto posterior.
+- **Saída demonstrada:** prática autenticada completa com contrato, regra de correção e persistência versionada.
+
+## Fases 5–7 — Prática completa
 
 - Questões/tentativas/caderno de erros; provas autorizadas; diagnóstico/plano/revisão; simulados/autosave/análise.
 - Cada fase fecha um caminho E2E e só então amplia cobertura.

@@ -9,6 +9,7 @@ import {
   curriculumModules,
   exams,
   profiles,
+  questions,
   subjects,
   topics,
   users,
@@ -309,6 +310,33 @@ async function seed() {
       authorId: editorId,
       reviewerId,
       verifiedAt: now,
+      publishedAt: now,
+    })
+    .onConflictDoNothing();
+
+  await getDatabase()
+    .insert(questions)
+    .values({
+      topicId: mathTopic.id,
+      type: "multiple_choice",
+      prompt: "Considere f(x) = 2x + 1. Qual é o valor de f(3)?",
+      options: [
+        { id: "a", text: "5" },
+        { id: "b", text: "6" },
+        { id: "c", text: "7" },
+        { id: "d", text: "8" },
+      ],
+      correctAnswer: "c",
+      resolution: "Substitua x por 3: f(3) = 2 · 3 + 1 = 6 + 1 = 7.",
+      commonError: "Esquecer de somar o termo constante após a multiplicação.",
+      difficulty: 1,
+      sourceUrl: "https://aprendevest.com/conteudo-autoral",
+      checksum:
+        "d601b51bed9bc954762ed43847005a7255c7e770fba47a1c5425158cc298e0af",
+      rightsStatus: "platform_authored",
+      status: "published",
+      authorId: editorId,
+      reviewerId,
       publishedAt: now,
     })
     .onConflictDoNothing();

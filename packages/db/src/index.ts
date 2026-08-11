@@ -24,6 +24,12 @@ export {
   transitionContentStatus,
 } from "./content/repository";
 export {
+  demoQuestion,
+  listErrors,
+  listPublishedQuestions,
+  submitQuestionAttempt,
+} from "./assessment/repository";
+export {
   completeProfile,
   createDatabaseSession,
   createStudent,

@@ -44,3 +44,7 @@ O catálogo público é servido por Server Components sobre o mesmo repositório
 
 - `GET` lista somente anotações do titular.
 - `POST` cria anotação de até 4.000 caracteres, opcionalmente associada a um timestamp.
+
+## POST `/api/v1/attempts`
+
+Registra tentativa autenticada com chave UUID de idempotência, versão da questão, resposta, tempo e contexto. A resposta inclui correção e resolução; um erro atualiza o caderno de erros do titular.

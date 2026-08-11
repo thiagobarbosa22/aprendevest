@@ -30,3 +30,8 @@ export {
   type ContentProgressInput,
   type LessonDraftInput,
 } from "./content";
+export {
+  errorClassificationSchema,
+  questionAttemptSchema,
+  type QuestionAttemptInput,
+} from "./assessment";

@@ -74,6 +74,7 @@ export default function HomePage() {
           >
             <Link href="/vestibulares">Vestibulares</Link>
             <Link href="/materias">Matérias</Link>
+            <Link href="/questoes">Questões</Link>
           </nav>
         </section>
 
