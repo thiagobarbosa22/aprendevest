@@ -22,3 +22,4 @@ export {
   type ContentProgressState,
 } from "./progress/content-progress";
 export { evaluateObjectiveAnswer } from "./assessments/evaluate-answer";
+export { mergeExamRun } from "./assessments/exam-run";

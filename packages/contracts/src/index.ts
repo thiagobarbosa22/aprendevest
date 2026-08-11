@@ -35,3 +35,4 @@ export {
   questionAttemptSchema,
   type QuestionAttemptInput,
 } from "./assessment";
+export { examRunUpdateSchema, type ExamRunUpdateInput } from "./exam-paper";

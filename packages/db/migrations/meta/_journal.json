@@ -29,6 +29,13 @@
       "when": 1786423019683,
       "tag": "0003_famous_unicorn",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1786437530192,
+      "tag": "0004_spotty_vulcan",
+      "breakpoints": true
     }
   ]
 }

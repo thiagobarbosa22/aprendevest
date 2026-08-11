@@ -34,7 +34,13 @@
 - Erros entram automaticamente no caderno e são resolvidos por acerto posterior.
 - **Saída demonstrada:** prática autenticada completa com contrato, regra de correção e persistência versionada.
 
-## Fases 5–7 — Prática completa
+## Fase 5 — Provas (concluída em 2026-08-11)
+
+- Repositório com link oficial, checksum, direitos, composição versionada e modo online.
+- Aplicação autenticada tem autosave, retomada, cronômetro e finalização imutável.
+- **Saída demonstrada:** prova sintética/autorizada pode ser filtrada, aberta e resolvida online.
+
+## Fases 6–7 — Plano e simulados
 
 - Questões/tentativas/caderno de erros; provas autorizadas; diagnóstico/plano/revisão; simulados/autosave/análise.
 - Cada fase fecha um caminho E2E e só então amplia cobertura.

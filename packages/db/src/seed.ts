@@ -8,6 +8,9 @@ import {
   contentItems,
   curriculumModules,
   exams,
+  examEditions,
+  examPaperQuestions,
+  examPapers,
   profiles,
   questions,
   subjects,
@@ -340,6 +343,74 @@ async function seed() {
       publishedAt: now,
     })
     .onConflictDoNothing();
+
+  const [enem] = await getDatabase()
+    .select({ id: exams.id })
+    .from(exams)
+    .where(eq(exams.slug, "enem"))
+    .limit(1);
+  const [seedQuestion] = await getDatabase()
+    .select({ id: questions.id })
+    .from(questions)
+    .where(
+      eq(
+        questions.checksum,
+        "d601b51bed9bc954762ed43847005a7255c7e770fba47a1c5425158cc298e0af",
+      ),
+    )
+    .limit(1);
+  if (enem && seedQuestion) {
+    const [newEdition] = await getDatabase()
+      .insert(examEditions)
+      .values({
+        examId: enem.id,
+        year: 2025,
+        editionLabel: "Demonstração",
+        rulesSourceUrl:
+          "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos",
+        verifiedAt: now,
+      })
+      .onConflictDoNothing()
+      .returning({ id: examEditions.id });
+    const edition =
+      newEdition ??
+      (
+        await getDatabase()
+          .select({ id: examEditions.id })
+          .from(examEditions)
+          .where(
+            and(eq(examEditions.examId, enem.id), eq(examEditions.year, 2025)),
+          )
+          .limit(1)
+      )[0];
+    if (edition) {
+      const [paper] = await getDatabase()
+        .insert(examPapers)
+        .values({
+          editionId: edition.id,
+          slug: "enem-demonstrativo-2025",
+          title: "ENEM 2025 — caderno demonstrativo",
+          durationMinutes: 90,
+          officialUrl:
+            "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos",
+          checksum:
+            "1f3146f5273bb6b0bc0247fb8cd19ce1802cc4610a951c13d9269f45881c5d2a",
+          rightsStatus: "official_link",
+          status: "published",
+        })
+        .onConflictDoNothing()
+        .returning({ id: examPapers.id });
+      if (paper)
+        await getDatabase()
+          .insert(examPaperQuestions)
+          .values({
+            paperId: paper.id,
+            questionId: seedQuestion.id,
+            position: 1,
+          })
+          .onConflictDoNothing();
+    }
+  }
 }
 
 seed()

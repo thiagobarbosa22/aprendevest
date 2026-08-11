@@ -4,7 +4,7 @@ Plataforma web de preparação para vestibulares, construída em fases a partir 
 
 ## Estado atual
 
-As Fases 0–4 estabelecem identidade, catálogo/CMS, aulas, progresso, banco de questões, correção e caderno de erros. Provas, planejamento e simulados são adicionados nos próximos incrementos.
+As Fases 0–5 estabelecem identidade, catálogo/CMS, aulas, questões, caderno de erros e provas anteriores com autosave. Planejamento e simulados são adicionados nos próximos incrementos.
 
 ## Início rápido
 

@@ -48,3 +48,8 @@ O catálogo público é servido por Server Components sobre o mesmo repositório
 ## POST `/api/v1/attempts`
 
 Registra tentativa autenticada com chave UUID de idempotência, versão da questão, resposta, tempo e contexto. A resposta inclui correção e resolução; um erro atualiza o caderno de erros do titular.
+
+## `/api/v1/exam-runs`
+
+- `POST` cria ou retoma aplicação de uma prova publicada e devolve sua composição versionada.
+- `PATCH /:runId` mescla respostas e tempo sem regressão; `submit: true` torna a aplicação imutável.

@@ -30,6 +30,14 @@ export {
   submitQuestionAttempt,
 } from "./assessment/repository";
 export {
+  demoPaper,
+  getPaperQuestions,
+  getPublishedPaper,
+  listPublishedPapers,
+  startExamRun,
+  updateExamRun,
+} from "./exam-paper/repository";
+export {
   completeProfile,
   createDatabaseSession,
   createStudent,
